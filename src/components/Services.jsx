@@ -1,47 +1,43 @@
 import { motion } from 'framer-motion'
 
-const services = [
+const serviceCategories = [
   {
-    name: 'Classic Manicure',
-    description: 'Shape, buff, cuticle care and polish for natural nails',
-    duration: '45 min',
-    price: 'GHS 60',
-    category: 'nails',
+    category: 'Lashes',
+    emoji: '✨',
+    items: [
+      { name: 'Classic Set', price: 'GHS 150' },
+      { name: 'Classic Cateye', price: 'GHS 180' },
+      { name: 'Hybrid Set', price: 'GHS 170' },
+      { name: 'Hybrid Cateye', price: 'GHS 200' },
+      { name: 'Volume Set', price: 'GHS 200' },
+      { name: 'Volume Cateye', price: 'GHS 250' },
+      { name: 'Cluster Lashes', price: 'GHS 60 – 120' },
+      { name: 'Refill', price: 'Half Price' },
+      { name: 'Removal', price: 'GHS 50' },
+    ],
   },
   {
-    name: 'Gel Extensions',
-    description: 'Long-lasting gel extensions with optional nail art',
-    duration: '90 min',
-    price: 'GHS 150',
-    category: 'nails',
+    category: 'Brows',
+    emoji: '🤍',
+    items: [
+      { name: 'Ombré Brows', price: 'GHS 500' },
+    ],
   },
   {
-    name: 'Nail Art Design',
-    description: 'Custom nail art - marble, chrome, florals, and more',
-    duration: '60 min',
-    price: 'GHS 120',
-    category: 'nails',
+    category: 'Nails Training',
+    emoji: '🎓',
+    items: [
+      { name: '1 Month Course', price: 'GHS 1,500' },
+      { name: '3 Months Course', price: 'GHS 3,500' },
+      { name: '1 Year Apprenticeship', price: 'GHS 2,000' },
+    ],
   },
   {
-    name: 'Pedicure Deluxe',
-    description: 'Luxury foot spa with exfoliation, massage and polish',
-    duration: '75 min',
-    price: 'GHS 100',
-    category: 'pedicure',
-  },
-  {
-    name: 'Ombre Brows',
-    description: 'Semi-permanent ombre brow shading for a natural look',
-    duration: '90 min',
-    price: 'GHS 200',
-    category: 'brows',
-  },
-  {
-    name: 'Home Service',
-    description: 'Any service at your location - travel fee applies',
-    duration: 'Varies',
-    price: 'From GHS 50',
-    category: 'home',
+    category: 'Home Service',
+    emoji: '🏠',
+    items: [
+      { name: 'Travel Fee (any service)', price: '+ GHS 40' },
+    ],
   },
 ]
 
@@ -64,42 +60,42 @@ const Services = () => {
             Our <span className="text-dustyrose italic">Services</span>
           </h2>
           <p className="font-body text-charcoal/70 max-w-2xl mx-auto">
-            Premium nail services and brow artistry tailored to your style
+            Premium lash, brow and nail services tailored to your style
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {services.map((service, index) => (
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          {serviceCategories.map((group, groupIndex) => (
             <motion.div
-              key={service.name}
+              key={group.category}
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
+              transition={{ duration: 0.5, delay: groupIndex * 0.1 }}
               className="bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition-shadow duration-300"
             >
-              <div className="flex justify-between items-start mb-4">
-                <h3 className="font-display text-2xl text-charcoal">{service.name}</h3>
-                <span className="bg-dustyrose/20 text-dustyrose text-sm font-body px-3 py-1 rounded-full">
-                  {service.category}
-                </span>
+              <div className="flex items-center gap-3 mb-5 pb-4 border-b border-charcoal/10">
+                <span className="text-2xl">{group.emoji}</span>
+                <h3 className="font-display text-2xl text-charcoal">{group.category}</h3>
               </div>
 
-              <p className="font-body text-charcoal/70 mb-4">{service.description}</p>
-
-              <div className="flex justify-between items-center mb-6">
-                <span className="font-body text-charcoal/60">
-                  <span className="inline-block mr-1">⏱</span> {service.duration}
-                </span>
-                <span className="font-display text-xl text-champagne">{service.price}</span>
-              </div>
+              <ul className="space-y-3 mb-6">
+                {group.items.map((item) => (
+                  <li key={item.name} className="flex justify-between items-center">
+                    <span className="font-body text-charcoal/80">{item.name}</span>
+                    <span className="font-display text-lg text-champagne whitespace-nowrap ml-4">
+                      {item.price}
+                    </span>
+                  </li>
+                ))}
+              </ul>
 
               <button
                 onClick={scrollToBooking}
                 className="w-full bg-charcoal text-porcelain font-body font-semibold py-3 rounded-full
                            hover:bg-dustyrose transition-colors duration-300"
               >
-                Book This
+                Book Now
               </button>
             </motion.div>
           ))}
