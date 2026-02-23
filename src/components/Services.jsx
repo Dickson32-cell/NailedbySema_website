@@ -2,6 +2,35 @@ import { motion } from 'framer-motion'
 
 const serviceCategories = [
   {
+    category: 'Manicure & Pedicure',
+    emoji: '💅',
+    items: [
+      { name: 'Manicure', price: 'GHS 60' },
+      { name: 'Classic Pedicure', price: 'GHS 130' },
+      { name: 'Jelly Pedicure', price: 'GHS 170' },
+      { name: 'Milky Pedicure', price: 'GHS 200' },
+    ],
+  },
+  {
+    category: 'Nail Extensions',
+    emoji: '💎',
+    items: [
+      { name: 'Stick-on Short', price: 'GHS 100' },
+      { name: 'Stick-on Medium', price: 'GHS 120' },
+      { name: 'Stick-on Long', price: 'GHS 150' },
+      { name: 'Acrylic Short', price: 'GHS 150' },
+      { name: 'Acrylic Medium', price: 'GHS 180' },
+      { name: 'Acrylic Long', price: 'GHS 220' },
+      { name: 'Builder Gel Short', price: 'GHS 80' },
+      { name: 'Builder Gel Medium', price: 'GHS 120' },
+      { name: 'Builder Gel Long', price: 'GHS 150' },
+      { name: 'Poly Gel Short', price: 'GHS 130' },
+      { name: 'Poly Gel Medium', price: 'GHS 160' },
+      { name: 'Poly Gel Long', price: 'GHS 200' },
+      { name: 'Nail Art', price: 'GHS 30 – 100' },
+    ],
+  },
+  {
     category: 'Lashes',
     emoji: '✨',
     items: [
