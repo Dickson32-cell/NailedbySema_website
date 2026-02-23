@@ -1,0 +1,17 @@
+services:
+  - type: web
+    name: nailedbysema
+    env: static
+    buildCommand: npm run build
+    publishPath: dist
+    envVars:
+      - key: VITE_SUPABASE_URL
+        fromConfig: true
+      - key: VITE_SUPABASE_ANON_KEY
+        fromConfig: true
+      - key: VITE_EMAILJS_USER_ID
+        fromConfig: true
+      - key: VITE_EMAILJS_SERVICE_ID
+        fromConfig: true
+      - key: VITE_EMAILJS_TEMPLATE_ID
+        fromConfig: true
