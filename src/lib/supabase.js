@@ -86,6 +86,44 @@ export async function sendWhatsAppNotification(bookingData) {
   return { success: true }
 }
 
+// Submit a review
+export async function submitReview(reviewData) {
+  const review = {
+    name: reviewData.name,
+    service: reviewData.service,
+    rating: reviewData.rating,
+    text: reviewData.text,
+    created_at: new Date().toISOString()
+  }
+
+  const { data, error } = await supabase
+    .from('reviews')
+    .insert([review])
+    .select()
+
+  if (error) {
+    console.error('Supabase review error:', error)
+    return { data: null, error: error.message }
+  }
+
+  return { data, error: null }
+}
+
+// Fetch all reviews
+export async function fetchReviews() {
+  const { data, error } = await supabase
+    .from('reviews')
+    .select('*')
+    .order('created_at', { ascending: false })
+
+  if (error) {
+    console.error('Error fetching reviews:', error)
+    return []
+  }
+
+  return data || []
+}
+
 // Fetch services
 export async function fetchServices() {
   const { data, error } = await supabase
