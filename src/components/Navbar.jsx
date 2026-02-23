@@ -71,8 +71,7 @@ const Navbar = () => {
               <a
                 key={link.name}
                 href={link.href}
-                className={`block py-2 font-body transition-colors ${scrolled ? 'text-charcoal' : 'text-porcelain'
-                  } hover:text-dustyrose`}
+                className="block py-2 font-body transition-colors text-charcoal hover:text-dustyrose"
                 onClick={() => setIsOpen(false)}
               >
                 {link.name}
