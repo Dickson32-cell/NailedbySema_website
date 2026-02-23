@@ -113,7 +113,7 @@ const Services = () => {
             Our <span className="text-dustyrose italic">Services</span>
           </h2>
           <p className="font-body text-charcoal/70 max-w-2xl mx-auto">
-            Premium lash, brow and nail services tailored to your style
+            Professional nail care services tailored to your style. All services include consultation!
           </p>
         </motion.div>
 
