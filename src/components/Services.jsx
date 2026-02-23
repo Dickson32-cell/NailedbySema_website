@@ -12,22 +12,46 @@ const serviceCategories = [
     ],
   },
   {
-    category: 'Nail Extensions',
-    emoji: '💎',
+    category: 'Stick-On Nails',
+    emoji: '🩷',
     items: [
-      { name: 'Stick-on Short', price: 'GHS 100' },
-      { name: 'Stick-on Medium', price: 'GHS 120' },
-      { name: 'Stick-on Long', price: 'GHS 150' },
+      { name: 'Stick-On Short', price: 'GHS 100' },
+      { name: 'Stick-On Medium', price: 'GHS 120' },
+      { name: 'Stick-On Long', price: 'GHS 150' },
+    ],
+  },
+  {
+    category: 'Acrylic Nails',
+    emoji: '✦',
+    items: [
       { name: 'Acrylic Short', price: 'GHS 150' },
       { name: 'Acrylic Medium', price: 'GHS 180' },
       { name: 'Acrylic Long', price: 'GHS 220' },
+    ],
+  },
+  {
+    category: 'Builder Gel',
+    emoji: '🤍',
+    items: [
       { name: 'Builder Gel Short', price: 'GHS 80' },
       { name: 'Builder Gel Medium', price: 'GHS 120' },
       { name: 'Builder Gel Long', price: 'GHS 150' },
+    ],
+  },
+  {
+    category: 'Poly Gel',
+    emoji: '✧',
+    items: [
       { name: 'Poly Gel Short', price: 'GHS 130' },
       { name: 'Poly Gel Medium', price: 'GHS 160' },
       { name: 'Poly Gel Long', price: 'GHS 200' },
-      { name: 'Nail Art', price: 'GHS 30 – 100' },
+    ],
+  },
+  {
+    category: 'Nail Art',
+    emoji: '🎨',
+    items: [
+      { name: 'Nail Art Design', price: 'GHS 30 – 100' },
     ],
   },
   {
@@ -93,7 +117,7 @@ const Services = () => {
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {serviceCategories.map((group, groupIndex) => (
             <motion.div
               key={group.category}
