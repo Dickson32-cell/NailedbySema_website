@@ -42,6 +42,12 @@ export default function Home() {
     }
   }
 
+  useEffect(() => {
+    const handleOpenBooking = () => setBookingOpen(true)
+    window.addEventListener('openBookingModal', handleOpenBooking)
+    return () => window.removeEventListener('openBookingModal', handleOpenBooking)
+  }, [])
+
   const nextTestimonial = () => {
     setCurrentTestimonial((prev) => (prev + 1) % testimonials.length)
   }

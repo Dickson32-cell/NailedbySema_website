@@ -52,7 +52,9 @@ export default function BookingForm({ isOpen, onClose, services }) {
     try {
       const { data, error } = await submitBooking(formData)
 
-      if (error) throw error
+      if (error) {
+        console.warn('Supabase booking save failed, but continuing to WhatsApp notification...', error)
+      }
 
       // Send WhatsApp notification and redirect cleanly
       const waResult = await sendWhatsAppNotification(formData)

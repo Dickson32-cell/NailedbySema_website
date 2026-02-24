@@ -71,7 +71,14 @@ const Footer = () => {
                 </a>
               </li>
               <li>
-                <a href="#booking" className="font-body text-porcelain/70 hover:text-dustyrose transition-colors">
+                <a
+                  href="#booking"
+                  onClick={(e) => {
+                    e.preventDefault()
+                    window.dispatchEvent(new Event('openBookingModal'))
+                  }}
+                  className="font-body text-porcelain/70 hover:text-dustyrose transition-colors"
+                >
                   Book Now
                 </a>
               </li>

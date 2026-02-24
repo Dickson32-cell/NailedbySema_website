@@ -44,6 +44,12 @@ const Navbar = () => {
               <a
                 key={link.name}
                 href={link.href}
+                onClick={(e) => {
+                  if (link.href === '#booking') {
+                    e.preventDefault()
+                    window.dispatchEvent(new Event('openBookingModal'))
+                  }
+                }}
                 className={`font-body transition-colors duration-300 ${scrolled
                   ? 'text-charcoal hover:text-dustyrose'
                   : 'text-porcelain hover:text-dustyrose'
@@ -72,7 +78,13 @@ const Navbar = () => {
                 key={link.name}
                 href={link.href}
                 className="block py-2 font-body transition-colors text-charcoal hover:text-dustyrose"
-                onClick={() => setIsOpen(false)}
+                onClick={(e) => {
+                  if (link.href === '#booking') {
+                    e.preventDefault()
+                    window.dispatchEvent(new Event('openBookingModal'))
+                  }
+                  setIsOpen(false)
+                }}
               >
                 {link.name}
               </a>
