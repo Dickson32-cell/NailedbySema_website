@@ -1,22 +1,30 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-
-const imagePaths = Object.keys(import.meta.glob('/public/uploads/*.{jpg,jpeg,png,gif,webp}'))
-
-const galleryImages = imagePaths.map(path => path.replace('/public', ''))
+import { fetchGalleryMedia } from '../lib/supabase'
 
 const categories = ['All', 'Gel', 'Acrylic', 'Nail Art', 'Pedicure']
 
 const Gallery = () => {
   const [activeCategory, setActiveCategory] = useState('All')
   const [selectedMedia, setSelectedMedia] = useState(null)
+  const [galleryItems, setGalleryItems] = useState([])
+  const [loading, setLoading] = useState(true)
 
-  // Use only images for display
-  const allMedia = galleryImages.map((src, i) => ({ type: 'image', src, id: `img-${i}` }))
+  useEffect(() => {
+    loadGallery()
+  }, [])
+
+  const loadGallery = async () => {
+    setLoading(true)
+    const items = await fetchGalleryMedia()
+    // Extract unique categories from db items if needed, but currently hardcoded is okay
+    setGalleryItems(items)
+    setLoading(false)
+  }
 
   const filteredMedia = activeCategory === 'All'
-    ? allMedia
-    : allMedia.filter((_, i) => i % 3 === 0) // Simplified filter for demo
+    ? galleryItems
+    : galleryItems.filter((item) => item.category === activeCategory)
 
   return (
     <section id="gallery" className="py-20 bg-white">
@@ -55,27 +63,43 @@ const Gallery = () => {
         {/* Masonry Grid */}
         <div className="columns-1 md:columns-2 lg:columns-3 gap-4 space-y-4">
           <AnimatePresence>
-            {filteredMedia.map((item, index) => (
-              <motion.div
-                key={item.id}
-                initial={{ opacity: 0, scale: 0.9 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.4, delay: index * 0.05 }}
-                className="gallery-item relative overflow-hidden rounded-xl cursor-pointer break-inside-avoid"
-                onClick={() => setSelectedMedia(item)}
-              >
-                {item.type === 'image' && (
-                  <img
-                    src={item.src}
-                    alt={`Nail art ${index + 1}`}
-                    className="w-full h-auto object-cover transition-transform duration-500 hover:scale-110"
-                  />
-                )}
-                {/* Shimmer Overlay */}
-                <div className="shimmer-overlay absolute inset-0 opacity-0 hover:opacity-100 transition-opacity duration-300" />
-              </motion.div>
-            ))}
+            {loading ? (
+              <div className="col-span-full py-20 text-center text-charcoal/50">Loading gallery...</div>
+            ) : filteredMedia.length === 0 ? (
+              <div className="col-span-full py-20 text-center text-charcoal/50">No items in this category yet.</div>
+            ) : (
+              filteredMedia.map((item, index) => (
+                <motion.div
+                  key={item.id}
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.4, delay: index * 0.05 }}
+                  className="gallery-item relative overflow-hidden rounded-xl cursor-pointer break-inside-avoid shadow-sm"
+                  onClick={() => setSelectedMedia(item)}
+                >
+                  {item.type === 'video' ? (
+                    <video
+                      src={item.url}
+                      className="w-full h-auto object-cover transition-transform duration-500 hover:scale-105"
+                      muted
+                      loop
+                      playsInline
+                      onMouseOver={e => e.target.play()}
+                      onMouseOut={e => e.target.pause()}
+                    />
+                  ) : (
+                    <img
+                      src={item.url}
+                      alt={`Nail art ${index + 1}`}
+                      className="w-full h-auto object-cover transition-transform duration-500 hover:scale-110"
+                    />
+                  )}
+                  {/* Shimmer Overlay */}
+                  <div className="shimmer-overlay absolute inset-0 opacity-0 hover:opacity-100 transition-opacity duration-300" />
+                </motion.div>
+              ))
+            )}
           </AnimatePresence>
         </div>
 
@@ -95,9 +119,16 @@ const Gallery = () => {
               >
                 &times;
               </button>
-              {selectedMedia.type === 'image' && (
+              {selectedMedia.type === 'video' ? (
+                <video
+                  src={selectedMedia.url}
+                  controls
+                  autoPlay
+                  className="max-w-full max-h-[90vh] object-contain"
+                />
+              ) : (
                 <img
-                  src={selectedMedia.src}
+                  src={selectedMedia.url}
                   alt="Selected"
                   className="max-w-full max-h-[90vh] object-contain"
                 />

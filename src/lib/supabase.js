@@ -181,3 +181,89 @@ export async function validateHandoutCode(code) {
 
   return { valid: true }
 }
+
+// ==========================================
+// GALLERY FUNCTIONS
+// ==========================================
+
+export async function fetchGalleryMedia() {
+  const { data, error } = await supabase
+    .from('gallery_items')
+    .select('*')
+    .order('created_at', { ascending: false })
+
+  if (error) {
+    console.error('Error fetching gallery items:', error)
+    return []
+  }
+
+  return data || []
+}
+
+export async function uploadGalleryMedia(file, category = 'All') {
+  try {
+    const fileExt = file.name.split('.').pop()
+    const type = file.type.startsWith('video/') ? 'video' : 'image'
+    // Ensure unique filename
+    const fileName = `${Math.random().toString(36).substring(2)}_${Date.now()}.${fileExt}`
+    const filePath = `${fileName}`
+
+    // 1. Upload to Storage Bucket
+    const { error: uploadError } = await supabase.storage
+      .from('gallery_media')
+      .upload(filePath, file)
+
+    if (uploadError) throw uploadError
+
+    // 2. Get Public URL
+    const { data: { publicUrl } } = supabase.storage
+      .from('gallery_media')
+      .getPublicUrl(filePath)
+
+    // 3. Save reference to DB
+    const { data: insertData, error: dbError } = await supabase
+      .from('gallery_items')
+      .insert([
+        {
+          url: publicUrl,
+          type: type,
+          category: category
+        }
+      ])
+      .select()
+
+    if (dbError) throw dbError
+
+    return { success: true, item: insertData[0] }
+  } catch (error) {
+    console.error('Media upload failed:', error)
+    return { success: false, error: error.message }
+  }
+}
+
+export async function deleteGalleryMedia(itemId, url) {
+  try {
+    // 1. Delete from DB
+    const { error: dbError } = await supabase
+      .from('gallery_items')
+      .delete()
+      .eq('id', itemId)
+
+    if (dbError) throw dbError
+
+    // 2. Extract relative path and delete from Storage
+    const fileName = url.split('/').pop()
+    if (fileName) {
+      const { error: storageError } = await supabase.storage
+        .from('gallery_media')
+        .remove([fileName])
+
+      if (storageError) console.error('Failed to remove from storage, but DB entry removed', storageError)
+    }
+
+    return { success: true }
+  } catch (error) {
+    console.error('Error deleting media:', error)
+    return { success: false, error: error.message }
+  }
+}
