@@ -182,11 +182,54 @@ export default function BookingForm({ isOpen, onClose, services }) {
               required
             >
               <option value="">Choose a service...</option>
-              {services?.map((service, index) => (
-                <option key={index} value={service.name}>
-                  {service.name} - GHC{service.price}
-                </option>
-              ))}
+              <optgroup label="Manicure & Pedicure">
+                <option value="Manicure">Manicure - GHS 60</option>
+                <option value="Classic Pedicure">Classic Pedicure - GHS 130</option>
+                <option value="Jelly Pedicure">Jelly Pedicure - GHS 170</option>
+                <option value="Milky Pedicure">Milky Pedicure - GHS 200</option>
+              </optgroup>
+              <optgroup label="Stick-On Nails">
+                <option value="Stick-On Short">Stick-On Short - GHS 100</option>
+                <option value="Stick-On Medium">Stick-On Medium - GHS 120</option>
+                <option value="Stick-On Long">Stick-On Long - GHS 150</option>
+              </optgroup>
+              <optgroup label="Acrylic Nails">
+                <option value="Acrylic Short">Acrylic Short - GHS 150</option>
+                <option value="Acrylic Medium">Acrylic Medium - GHS 180</option>
+                <option value="Acrylic Long">Acrylic Long - GHS 220</option>
+              </optgroup>
+              <optgroup label="Builder Gel">
+                <option value="Builder Gel Short">Builder Gel Short - GHS 80</option>
+                <option value="Builder Gel Medium">Builder Gel Medium - GHS 120</option>
+                <option value="Builder Gel Long">Builder Gel Long - GHS 150</option>
+              </optgroup>
+              <optgroup label="Poly Gel">
+                <option value="Poly Gel Short">Poly Gel Short - GHS 130</option>
+                <option value="Poly Gel Medium">Poly Gel Medium - GHS 160</option>
+                <option value="Poly Gel Long">Poly Gel Long - GHS 200</option>
+              </optgroup>
+              <optgroup label="Nail Art">
+                <option value="Nail Art Design">Nail Art Design - GHS 30 – 100</option>
+              </optgroup>
+              <optgroup label="Lashes">
+                <option value="Classic Set">Classic Set - GHS 150</option>
+                <option value="Classic Cateye">Classic Cateye - GHS 180</option>
+                <option value="Hybrid Set">Hybrid Set - GHS 170</option>
+                <option value="Hybrid Cateye">Hybrid Cateye - GHS 200</option>
+                <option value="Volume Set">Volume Set - GHS 200</option>
+                <option value="Volume Cateye">Volume Cateye - GHS 250</option>
+                <option value="Cluster Lashes">Cluster Lashes - GHS 60 – 120</option>
+                <option value="Refill">Refill - Half Price</option>
+                <option value="Removal">Removal - GHS 50</option>
+              </optgroup>
+              <optgroup label="Brows">
+                <option value="Ombré Brows">Ombré Brows - GHS 500</option>
+              </optgroup>
+              <optgroup label="Nails Training">
+                <option value="1 Month Course">1 Month Course - GHS 1,500</option>
+                <option value="3 Months Course">3 Months Course - GHS 3,500</option>
+                <option value="1 Year Apprenticeship">1 Year Apprenticeship - GHS 2,000</option>
+              </optgroup>
             </select>
           </div>
 

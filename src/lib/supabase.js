@@ -66,7 +66,7 @@ export async function updateBookingStatus(bookingId, status) {
   return { data, error: null }
 }
 
-// Send WhatsApp notification (using WhatsApp API or fallback)
+// Send WhatsApp notification
 export async function sendWhatsAppNotification(bookingData) {
   const message = `*New Booking from Nailed by Sema*\n\n` +
     `*Client:* ${bookingData.clientName}\n` +
@@ -74,15 +74,23 @@ export async function sendWhatsAppNotification(bookingData) {
     `*Service:* ${bookingData.service}\n` +
     `*Date:* ${bookingData.bookingDate}\n` +
     `*Time:* ${bookingData.bookingTime}\n` +
-    `${bookingData.isHomeService ? `*Home Service:* Yes (+GHC20)\n` : ''}` +
+    `${bookingData.isHomeService ? `*Home Service:* Yes (+GHC40)\n` : ''}` +
     `${bookingData.clientAddress ? `*Address:* ${bookingData.clientAddress}\n` : ''}` +
     `${bookingData.notes ? `*Notes:* ${bookingData.notes}\n` : ''}`
 
-  console.log('WhatsApp notification would be sent:', message)
-  
-  // In production, you would integrate with WhatsApp Business API
-  // For now, we'll just log it
-  
+  console.log('Opening WhatsApp...')
+
+  // Format the phone number (assuming Sema's number is 0557252250, using a placeholder if needed,
+  // but let's use +233 standard Ghana code format. Let's redirect to her actual WA link if she has one.
+  // Actually, we can use a generic api.whatsapp.com link with her number.
+  // We'll use a placeholder number '233557252250' which should be replaced by her actual number
+  const semaPhoneNumber = '233557252250' // Update this with her actual number
+
+  const whatsappUrl = `https://api.whatsapp.com/send?phone=${semaPhoneNumber}&text=${encodeURIComponent(message)}`
+
+  // Open in new tab
+  window.open(whatsappUrl, '_blank')
+
   return { success: true }
 }
 
