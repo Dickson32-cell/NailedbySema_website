@@ -94,11 +94,7 @@ const serviceCategories = [
   },
 ]
 
-const Services = () => {
-  const scrollToBooking = () => {
-    document.getElementById('booking')?.scrollIntoView({ behavior: 'smooth' })
-  }
-
+const Services = ({ onBook }) => {
   return (
     <section id="services" className="py-20 bg-porcelain">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -144,7 +140,7 @@ const Services = () => {
               </ul>
 
               <button
-                onClick={scrollToBooking}
+                onClick={onBook}
                 className="w-full bg-charcoal text-porcelain font-body font-semibold py-3 rounded-full
                            hover:bg-dustyrose transition-colors duration-300"
               >

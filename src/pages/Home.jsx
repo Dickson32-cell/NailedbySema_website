@@ -3,6 +3,7 @@ import BookingForm from '../components/BookingForm'
 import { fetchServices } from '../lib/supabase'
 import Gallery from '../components/Gallery'
 import About from '../components/About'
+import Services from '../components/Services'
 import { Star, Clock, MapPin, Phone, MessageCircle, Instagram, Facebook, ChevronLeft, ChevronRight } from 'lucide-react'
 
 // Default services in case Supabase fails
@@ -76,44 +77,7 @@ export default function Home() {
       </section>
 
       {/* Services Section */}
-      <section className="py-20 px-4" id="services">
-        <div className="max-w-6xl mx-auto">
-          <h2 className="text-4xl font-bold text-center text-gray-800 mb-4">Our Services</h2>
-          <p className="text-gray-600 text-center mb-12 max-w-2xl mx-auto">
-            Professional nail care services tailored to your style. All services include consultation!
-          </p>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {services.map((service, index) => (
-              <div
-                key={index}
-                className="bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition transform hover:-translate-y-1 border border-pink-100"
-              >
-                <div className="flex justify-between items-start mb-4">
-                  <h3 className="text-xl font-bold text-gray-800">{service.name}</h3>
-                  <span className="bg-pink-100 text-pink-600 px-3 py-1 rounded-full text-sm font-semibold">
-                    GHC{service.price}
-                  </span>
-                </div>
-                <p className="text-gray-600 mb-4">{service.description}</p>
-                <div className="flex items-center gap-2 text-pink-500">
-                  <Clock className="w-4 h-4" />
-                  <span className="text-sm">{service.duration}</span>
-                </div>
-              </div>
-            ))}
-          </div>
-
-          <div className="text-center mt-10">
-            <button
-              onClick={() => setBookingOpen(true)}
-              className="bg-gradient-to-r from-pink-600 to-pink-800 text-white px-8 py-3 rounded-full font-semibold hover:from-pink-700 hover:to-pink-900 transition"
-            >
-              Book Your Appointment →
-            </button>
-          </div>
-        </div>
-      </section>
+      <Services onBook={() => setBookingOpen(true)} />
 
       {/* Gallery Section */}
       <Gallery />
