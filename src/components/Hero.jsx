@@ -40,7 +40,7 @@ const Hero = () => {
           transition={{ duration: 0.8, delay: 0.4 }}
           className="font-body text-xl md:text-2xl text-porcelain/90 mb-10"
         >
-          Sema — Gel nails, nail art, luxury pedicures & ombre brows in Koforidua
+          Sema — Gel nails, nail art, luxury pedicures & ombre brows opposite Vineyard Hostel, Koforidua
         </motion.p>
 
         <motion.button

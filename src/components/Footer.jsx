@@ -97,7 +97,7 @@ const Footer = () => {
               <li className="flex items-start gap-3">
                 <FaMapMarkerAlt className="text-dustyrose mt-1" />
                 <span className="font-body text-porcelain/70">
-                  Sarah's Corner, EN-113-2066<br />
+                  Opposite Vineyard Hostel<br />
                   Koforidua, Eastern Region<br />
                   Ghana
                 </span>
@@ -117,7 +117,7 @@ const Footer = () => {
                 allowFullScreen=""
                 loading="lazy"
                 referrerPolicy="no-referrer-when-downgrade"
-                title="Studio Location - Sarah's Corner EN-113-2066, Koforidua"
+                title="Studio Location - Opposite Vineyard Hostel, Koforidua"
               />
             </div>
             <p className="font-body text-xs text-porcelain/50 mt-2">

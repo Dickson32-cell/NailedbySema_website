@@ -143,7 +143,7 @@ export default function Home() {
                 <MapPin className="w-8 h-8" />
               </div>
               <h3 className="text-xl font-bold mb-2">Easy Location</h3>
-              <p className="opacity-80">Located in the heart of Koforidua</p>
+              <p className="opacity-80">Located opposite Vineyard Hostel, Koforidua</p>
             </div>
           </div>
         </div>

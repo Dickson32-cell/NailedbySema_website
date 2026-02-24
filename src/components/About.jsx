@@ -42,7 +42,7 @@ const About = () => {
             </h2>
 
             <p className="font-body text-lg text-charcoal/80 mb-6 leading-relaxed">
-              Based in Koforidua, Eastern Region, I specialize in creating stunning nail art
+              Based opposite Vineyard Hostel in Koforidua, I specialize in creating stunning nail art
               designs that make you feel confident and beautiful. From classic gel manicures
               to intricate nail art, every service is tailored to your unique style.
             </p>
