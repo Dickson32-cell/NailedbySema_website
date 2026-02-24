@@ -99,11 +99,6 @@ export default function Home() {
             </button>
 
             <div className="text-center px-10 md:px-16">
-              <img
-                src={testimonials[currentTestimonial].image}
-                alt={testimonials[currentTestimonial].name}
-                className="w-20 h-20 rounded-full mx-auto mb-4 object-cover"
-              />
               <div className="flex justify-center gap-1 mb-4">
                 {[...Array(testimonials[currentTestimonial].rating)].map((_, i) => (
                   <Star key={i} className="w-5 h-5 text-yellow-400 fill-current" />
