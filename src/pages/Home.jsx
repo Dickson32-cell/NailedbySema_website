@@ -4,6 +4,7 @@ import { fetchServices } from '../lib/supabase'
 import Gallery from '../components/Gallery'
 import About from '../components/About'
 import Services from '../components/Services'
+import HandoutModal from '../components/HandoutModal'
 import { Star, Clock, MapPin, Phone, MessageCircle, Instagram, Facebook, ChevronLeft, ChevronRight } from 'lucide-react'
 
 // Default services in case Supabase fails
@@ -24,6 +25,7 @@ const testimonials = [
 
 export default function Home() {
   const [bookingOpen, setBookingOpen] = useState(false)
+  const [handoutOpen, setHandoutOpen] = useState(false)
   const [services, setServices] = useState(defaultServices)
   const [currentTestimonial, setCurrentTestimonial] = useState(0)
 
@@ -83,7 +85,7 @@ export default function Home() {
       </section>
 
       {/* Services Section */}
-      <Services onBook={() => setBookingOpen(true)} />
+      <Services onBook={() => setBookingOpen(true)} onDownloadHandout={() => setHandoutOpen(true)} />
 
       {/* Gallery Section */}
       <Gallery />
@@ -160,6 +162,12 @@ export default function Home() {
         isOpen={bookingOpen}
         onClose={() => setBookingOpen(false)}
         services={services}
+      />
+
+      {/* Handout Modal */}
+      <HandoutModal
+        isOpen={handoutOpen}
+        onClose={() => setHandoutOpen(false)}
       />
     </div>
   )

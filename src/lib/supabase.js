@@ -80,10 +80,10 @@ export async function sendWhatsAppNotification(bookingData) {
 
   console.log('Generating WhatsApp Link...')
 
-  // Format the phone number (assuming Sema's number is 0557252250)
-  const semaPhoneNumber = '233557252250' // Update this with her actual number
+  // Format the phone number with Sema's actual number
+  const semaPhoneNumber = '233539649949'
 
-  const whatsappUrl = `https://api.whatsapp.com/send?phone=${semaPhoneNumber}&text=${encodeURIComponent(message)}`
+  const whatsappUrl = `https://wa.me/${semaPhoneNumber}?text=${encodeURIComponent(message)}`
 
   return { success: true, url: whatsappUrl }
 }
@@ -140,4 +140,44 @@ export async function fetchServices() {
   }
 
   return data || []
+}
+
+// Generate a new 1-time Handout Code
+export async function generateHandoutCode() {
+  const code = Math.random().toString(36).substring(2, 8).toUpperCase()
+  const { data, error } = await supabase
+    .from('handout_codes')
+    .insert([{ code, is_used: false }])
+    .select()
+
+  if (error) {
+    console.error('Error generating handout code:', error)
+    return { success: false, error: error.message }
+  }
+  return { success: true, code: data[0].code }
+}
+
+// Validate a Handout Code
+export async function validateHandoutCode(code) {
+  const { data, error } = await supabase
+    .from('handout_codes')
+    .select('*')
+    .eq('code', code.trim().toUpperCase())
+    .maybeSingle()
+
+  if (error || !data) {
+    return { valid: false, message: 'Invalid code.' }
+  }
+
+  if (data.is_used) {
+    return { valid: false, message: 'This code has already been used.' }
+  }
+
+  // Mark as used
+  await supabase
+    .from('handout_codes')
+    .update({ is_used: true })
+    .eq('id', data.id)
+
+  return { valid: true }
 }

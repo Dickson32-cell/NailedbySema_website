@@ -1,12 +1,24 @@
 import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
-import { supabase } from '../lib/supabase'
+import { supabase, generateHandoutCode } from '../lib/supabase'
 
 const Admin = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false)
   const [password, setPassword] = useState('')
   const [bookings, setBookings] = useState([])
   const [loading, setLoading] = useState(false)
+  const [generatedCode, setGeneratedCode] = useState(null)
+
+  const handleGenerateCode = async () => {
+    setLoading(true)
+    const result = await generateHandoutCode()
+    if (result.success) {
+      setGeneratedCode(result.code)
+    } else {
+      alert('Error generating code: ' + result.error)
+    }
+    setLoading(false)
+  }
 
   // Simple password check (in production, use proper auth)
   const handleLogin = (e) => {
@@ -144,6 +156,29 @@ const Admin = () => {
           </div>
         </div>
 
+        {/* Handout Code Generator */}
+        <div className="bg-white rounded-xl p-6 shadow-md border-l-4 border-dustyrose mb-8 flex flex-col md:flex-row items-center justify-between gap-4">
+          <div>
+            <h2 className="font-display text-2xl text-charcoal mb-1">Handout Codes</h2>
+            <p className="font-body text-charcoal/60 text-sm">Generate 1-time codes for clients who paid 200 GHS for the Training Handout.</p>
+          </div>
+          <div className="flex flex-col sm:flex-row items-center gap-4 w-full md:w-auto">
+            {generatedCode && (
+              <div className="bg-green-50 px-6 py-2 rounded-lg border border-green-200 text-center w-full sm:w-auto">
+                <p className="text-xs text-green-800 uppercase tracking-widest mb-1">New Code</p>
+                <p className="font-display text-xl text-green-900">{generatedCode}</p>
+              </div>
+            )}
+            <button
+              onClick={handleGenerateCode}
+              disabled={loading}
+              className="w-full sm:w-auto bg-dustyrose text-charcoal font-semibold px-6 py-3 rounded-lg hover:bg-champagne transition-colors whitespace-nowrap"
+            >
+              Generate 1-Time Code
+            </button>
+          </div>
+        </div>
+
         {/* Bookings Table */}
         <div className="bg-white rounded-2xl shadow-xl overflow-hidden">
           <div className="p-6 border-b border-charcoal/10">
@@ -185,11 +220,10 @@ const Admin = () => {
                       <td className="px-6 py-4 font-body text-charcoal">{booking.booking_date || booking.bookingDate}</td>
                       <td className="px-6 py-4 font-body text-charcoal">{booking.booking_time || booking.bookingTime}</td>
                       <td className="px-6 py-4">
-                        <span className={`px-3 py-1 rounded-full text-sm font-body ${
-                          booking.status === 'confirmed' ? 'bg-green-100 text-green-800' :
+                        <span className={`px-3 py-1 rounded-full text-sm font-body ${booking.status === 'confirmed' ? 'bg-green-100 text-green-800' :
                           booking.status === 'cancelled' ? 'bg-red-100 text-red-800' :
-                          'bg-yellow-100 text-yellow-800'
-                        }`}>
+                            'bg-yellow-100 text-yellow-800'
+                          }`}>
                           {booking.status || 'pending'}
                         </span>
                       </td>

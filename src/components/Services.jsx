@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion'
+import { Download } from 'lucide-react'
 
 const serviceCategories = [
   {
@@ -94,7 +95,7 @@ const serviceCategories = [
   },
 ]
 
-const Services = ({ onBook }) => {
+const Services = ({ onBook, onDownloadHandout }) => {
   return (
     <section id="services" className="py-20 bg-porcelain">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -146,6 +147,15 @@ const Services = ({ onBook }) => {
               >
                 Book Now
               </button>
+
+              {group.category === 'Nails Training' && (
+                <button
+                  onClick={onDownloadHandout}
+                  className="w-full mt-3 bg-white border-2 border-dustyrose text-dustyrose font-body font-semibold py-3 rounded-full hover:bg-dustyrose hover:text-white transition-colors duration-300 flex items-center justify-center gap-2"
+                >
+                  Buy Training Handout (200 GHS) <Download className="w-5 h-5" />
+                </button>
+              )}
             </motion.div>
           ))}
         </div>
