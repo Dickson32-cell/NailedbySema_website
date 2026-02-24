@@ -6,12 +6,12 @@ services:
     staticPublishPath: dist
     envVars:
       - key: VITE_SUPABASE_URL
-        fromConfig: true
+        sync: false
       - key: VITE_SUPABASE_ANON_KEY
-        fromConfig: true
+        sync: false
       - key: VITE_EMAILJS_USER_ID
-        fromConfig: true
+        sync: false
       - key: VITE_EMAILJS_SERVICE_ID
-        fromConfig: true
+        sync: false
       - key: VITE_EMAILJS_TEMPLATE_ID
-        fromConfig: true
+        sync: false
