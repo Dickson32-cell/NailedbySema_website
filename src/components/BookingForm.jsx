@@ -54,13 +54,18 @@ export default function BookingForm({ isOpen, onClose, services }) {
 
       if (error) throw error
 
-      // Send WhatsApp notification to Sema
-      await sendWhatsAppNotification(formData)
+      // Send WhatsApp notification and redirect cleanly
+      const waResult = await sendWhatsAppNotification(formData)
 
       setMessage({
         type: 'success',
-        text: 'Booking submitted! Check your phone for confirmation. Sema will contact you soon!'
+        text: 'Booking submitted! Redirecting to WhatsApp to confirm...'
       })
+
+      if (waResult.success && waResult.url) {
+        // We use window.location.href instead of window.open to avoid popup blockers
+        window.location.href = waResult.url
+      }
 
       // Reset form after successful submission
       setTimeout(() => {

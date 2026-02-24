@@ -78,20 +78,14 @@ export async function sendWhatsAppNotification(bookingData) {
     `${bookingData.clientAddress ? `*Address:* ${bookingData.clientAddress}\n` : ''}` +
     `${bookingData.notes ? `*Notes:* ${bookingData.notes}\n` : ''}`
 
-  console.log('Opening WhatsApp...')
+  console.log('Generating WhatsApp Link...')
 
-  // Format the phone number (assuming Sema's number is 0557252250, using a placeholder if needed,
-  // but let's use +233 standard Ghana code format. Let's redirect to her actual WA link if she has one.
-  // Actually, we can use a generic api.whatsapp.com link with her number.
-  // We'll use a placeholder number '233557252250' which should be replaced by her actual number
+  // Format the phone number (assuming Sema's number is 0557252250)
   const semaPhoneNumber = '233557252250' // Update this with her actual number
 
   const whatsappUrl = `https://api.whatsapp.com/send?phone=${semaPhoneNumber}&text=${encodeURIComponent(message)}`
 
-  // Open in new tab
-  window.open(whatsappUrl, '_blank')
-
-  return { success: true }
+  return { success: true, url: whatsappUrl }
 }
 
 // Submit a review
