@@ -26,23 +26,22 @@ const HandoutModal = ({ isOpen, onClose }) => {
 
             if (result.valid) {
                 setStatus('success')
-                setMessage('Code verified! Downloading your handout...')
+                setMessage('Code verified! Click the button below if the download does not start automatically.')
 
-                // Trigger file download
-                const link = document.createElement('a')
-                link.href = 'https://csopcqjsaoxvieepuaqk.supabase.co/storage/v1/object/public/handout_pdfs/Training%20HandOut.pdf'
-                link.target = '_blank' // Important for external URLs
-                link.download = 'Sema_Training_HandOut.pdf'
-                document.body.appendChild(link)
-                link.click()
-                document.body.removeChild(link)
+                // Try to trigger file download automatically
+                try {
+                    const link = document.createElement('a')
+                    link.href = 'https://csopcqjsaoxvieepuaqk.supabase.co/storage/v1/object/public/handout_pdfs/Training%20HandOut.pdf'
+                    link.target = '_blank' // Important for external URLs
+                    link.download = 'Sema_Training_HandOut.pdf'
+                    document.body.appendChild(link)
+                    link.click()
+                    document.body.removeChild(link)
+                } catch (e) {
+                    console.error("Auto-download failed:", e)
+                }
 
-                // Close modal after a delay
-                setTimeout(() => {
-                    onClose()
-                    setCode('')
-                    setStatus('idle')
-                }, 3000)
+                // On mobile, auto-download is often blocked. The manual button handles that.
             } else {
                 setStatus('error')
                 setMessage(result.message || 'Invalid or expired code.')
@@ -131,19 +130,36 @@ const HandoutModal = ({ isOpen, onClose }) => {
                                     </div>
                                 )}
 
-                                <button
-                                    type="submit"
-                                    disabled={status === 'loading' || status === 'success'}
-                                    className="w-full bg-dustyrose text-charcoal font-semibold py-3 rounded-xl flex items-center justify-center gap-2 hover:bg-champagne hover:scale-[1.02] active:scale-[0.98] transition-all disabled:opacity-70 disabled:hover:scale-100 shadow-md"
-                                >
-                                    {status === 'loading' ? (
-                                        <span className="animate-pulse">Verifying...</span>
-                                    ) : status === 'success' ? (
-                                        <>Downloading... <Download className="w-5 h-5 animate-bounce" /></>
-                                    ) : (
-                                        <>Verify & Download <Download className="w-5 h-5" /></>
-                                    )}
-                                </button>
+                                {status === 'success' ? (
+                                    <a
+                                        href="https://csopcqjsaoxvieepuaqk.supabase.co/storage/v1/object/public/handout_pdfs/Training%20HandOut.pdf"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        download="Sema_Training_HandOut.pdf"
+                                        className="w-full bg-green-600 text-white font-semibold py-3 rounded-xl flex items-center justify-center gap-2 hover:bg-green-700 transition-all shadow-md"
+                                        onClick={() => {
+                                            setTimeout(() => {
+                                                onClose()
+                                                setCode('')
+                                                setStatus('idle')
+                                            }, 2000)
+                                        }}
+                                    >
+                                        Download Handout <Download className="w-5 h-5 animate-bounce" />
+                                    </a>
+                                ) : (
+                                    <button
+                                        type="submit"
+                                        disabled={status === 'loading'}
+                                        className="w-full bg-dustyrose text-charcoal font-semibold py-3 rounded-xl flex items-center justify-center gap-2 hover:bg-champagne hover:scale-[1.02] active:scale-[0.98] transition-all disabled:opacity-70 disabled:hover:scale-100 shadow-md"
+                                    >
+                                        {status === 'loading' ? (
+                                            <span className="animate-pulse">Verifying...</span>
+                                        ) : (
+                                            <>Verify & Download <Download className="w-5 h-5" /></>
+                                        )}
+                                    </button>
+                                )}
                             </form>
                         </div>
                     </motion.div>
