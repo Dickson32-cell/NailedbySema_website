@@ -260,10 +260,49 @@ export async function deleteGalleryMedia(itemId, url) {
 
       if (storageError) console.error('Failed to remove from storage, but DB entry removed', storageError)
     }
-
     return { success: true }
   } catch (error) {
     console.error('Error deleting media:', error)
     return { success: false, error: error.message }
   }
+}
+
+// ==========================================
+// ABOUT SECTION FUNCTIONS
+// ==========================================
+
+// Fetch about section data
+export async function fetchAboutData() {
+  const { data, error } = await supabase
+    .from('about_section')
+    .select('*')
+    .eq('id', 1)
+    .single()
+
+  if (error && error.code !== 'PGRST116') { // PGRST116 is "No rows found"
+    console.error('Error fetching about data:', error)
+    return null
+  }
+
+  return data
+}
+
+// Update about section data
+export async function updateAboutData(updatePayload) {
+  const payloadWithTimestamp = {
+    ...updatePayload,
+    updated_at: new Date().toISOString()
+  }
+
+  const { data, error } = await supabase
+    .from('about_section')
+    .upsert([{ id: 1, ...payloadWithTimestamp }])
+    .select()
+
+  if (error) {
+    console.error('Error updating about data:', error)
+    return { success: false, error: error.message }
+  }
+
+  return { success: true, data: data[0] }
 }

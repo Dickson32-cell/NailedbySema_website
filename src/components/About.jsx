@@ -1,7 +1,27 @@
+import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { FaSnapchat, FaTiktok, FaWhatsapp } from 'react-icons/fa'
+import { fetchAboutData } from '../lib/supabase'
 
 const About = () => {
+  const [aboutData, setAboutData] = useState({
+    name: 'Sema',
+    title: 'Nail Technician & Brow Artist',
+    image_url: '/uploads/WhatsApp Image 2026-02-21 at 2.35.54 AM.jpeg',
+    bio_p1: 'Based opposite Vineyard Hostel in Koforidua, I specialize in creating stunning nail art designs that make you feel confident and beautiful. From classic gel manicures to intricate nail art, every service is tailored to your unique style.',
+    bio_p2: 'I also offer premium ombre brow services for a polished, natural look. Whether you prefer visiting my studio or would like me to come to your location, I bring the salon experience to you.'
+  })
+
+  useEffect(() => {
+    const loadData = async () => {
+      const data = await fetchAboutData()
+      if (data) {
+        setAboutData(data)
+      }
+    }
+    loadData()
+  }, [])
+
   return (
     <section id="about" className="py-20 bg-porcelain">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -16,13 +36,13 @@ const About = () => {
           >
             <div className="relative rounded-2xl overflow-hidden shadow-2xl">
               <img
-                src="/uploads/WhatsApp Image 2026-02-21 at 2.35.54 AM.jpeg"
-                alt="Sema - Nail Technician"
+                src={aboutData.image_url}
+                alt={`${aboutData.name} - ${aboutData.title}`}
                 className="w-full h-[500px] object-cover"
               />
               <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-charcoal/80 to-transparent p-6">
-                <p className="font-display text-2xl text-porcelain">Sema</p>
-                <p className="font-body text-porcelain/80">Nail Technician & Brow Artist</p>
+                <p className="font-display text-2xl text-porcelain">{aboutData.name}</p>
+                <p className="font-body text-porcelain/80">{aboutData.title}</p>
               </div>
             </div>
             {/* Decorative element */}
@@ -38,19 +58,15 @@ const About = () => {
             transition={{ duration: 0.6, delay: 0.2 }}
           >
             <h2 className="font-display text-4xl md:text-5xl text-charcoal mb-6">
-              Meet <span className="text-dustyrose italic">Sema</span>
+              Meet <span className="text-dustyrose italic">{aboutData.name}</span>
             </h2>
 
-            <p className="font-body text-lg text-charcoal/80 mb-6 leading-relaxed">
-              Based opposite Vineyard Hostel in Koforidua, I specialize in creating stunning nail art
-              designs that make you feel confident and beautiful. From classic gel manicures
-              to intricate nail art, every service is tailored to your unique style.
+            <p className="font-body text-lg text-charcoal/80 mb-6 leading-relaxed whitespace-pre-wrap">
+              {aboutData.bio_p1}
             </p>
 
-            <p className="font-body text-lg text-charcoal/80 mb-8 leading-relaxed">
-              I also offer premium ombre brow services for a polished, natural look.
-              Whether you prefer visiting my studio or would like me to come to your
-              location, I bring the salon experience to you.
+            <p className="font-body text-lg text-charcoal/80 mb-8 leading-relaxed whitespace-pre-wrap">
+              {aboutData.bio_p2}
             </p>
 
             {/* Home Service Badge */}

@@ -5,7 +5,9 @@ import {
   generateHandoutCode,
   fetchGalleryMedia,
   uploadGalleryMedia,
-  deleteGalleryMedia
+  deleteGalleryMedia,
+  fetchAboutData,
+  updateAboutData
 } from '../lib/supabase'
 import {
   LayoutDashboard,
@@ -34,7 +36,18 @@ const Admin = () => {
   // Loading states
   const [loading, setLoading] = useState(false)
   const [uploading, setUploading] = useState(false)
+  const [savingAbout, setSavingAbout] = useState(false)
   const [generatedCode, setGeneratedCode] = useState(null)
+
+  // About Section Form State
+  const [aboutData, setAboutData] = useState({
+    name: 'Sema',
+    title: 'Nail Technician & Brow Artist',
+    image_url: '/uploads/WhatsApp Image 2026-02-21 at 2.35.54 AM.jpeg',
+    bio_p1: '',
+    bio_p2: ''
+  })
+
 
   const fileInputRef = useRef(null)
 
@@ -60,10 +73,12 @@ const Admin = () => {
     await Promise.all([
       fetchBookingsData(),
       fetchHandoutData(),
-      fetchGalleryData()
+      fetchGalleryData(),
+      loadAboutData()
     ])
     setLoading(false)
   }
+
 
   // ==========================================
   // BOOKINGS DATA
@@ -117,6 +132,36 @@ const Admin = () => {
   const copyToClipboard = (text) => {
     navigator.clipboard.writeText(text)
     alert('Copied to clipboard!')
+  }
+
+  // ==========================================
+  // ABOUT SECTION DATA
+  // ==========================================
+  const loadAboutData = async () => {
+    const data = await fetchAboutData()
+    if (data) {
+      setAboutData(data)
+    }
+  }
+
+  const handleSaveAbout = async (e) => {
+    e.preventDefault()
+    setSavingAbout(true)
+    const result = await updateAboutData(aboutData)
+
+    if (result.success) {
+      alert('About section updated successfully! Changes are now live.')
+      // Update local state just in case
+      if (result.data) setAboutData(result.data)
+    } else {
+      alert('Failed to update About section: ' + result.error)
+    }
+    setSavingAbout(false)
+  }
+
+  const handleAboutChange = (e) => {
+    const { name, value } = e.target
+    setAboutData(prev => ({ ...prev, [name]: value }))
   }
 
   // ==========================================
@@ -233,6 +278,12 @@ const Admin = () => {
           >
             <ImageIcon className="w-5 h-5" /> Gallery Manager
           </button>
+          <button
+            onClick={() => setActiveTab('about')}
+            className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg transition-colors ${activeTab === 'about' ? 'bg-dustyrose text-neutral-900 font-semibold' : 'hover:bg-neutral-800 text-neutral-300'}`}
+          >
+            <FolderOpen className="w-5 h-5" /> Edit About Page
+          </button>
         </nav>
 
         <div className="p-4 border-t border-neutral-800">
@@ -253,8 +304,11 @@ const Admin = () => {
         <button onClick={() => setActiveTab('handouts')} className={`flex-1 py-4 text-center text-sm font-semibold border-b-2 ${activeTab === 'handouts' ? 'border-dustyrose text-dustyrose' : 'border-transparent text-neutral-400'}`}>
           Payments
         </button>
-        <button onClick={() => setActiveTab('gallery')} className={`flex-1 py-4 text-center text-sm font-semibold border-b-2 ${activeTab === 'gallery' ? 'border-dustyrose text-dustyrose' : 'border-transparent text-neutral-400'}`}>
+        <button onClick={() => setActiveTab('gallery')} className={`flex-1 min-w-[100px] py-4 text-center text-sm font-semibold border-b-2 ${activeTab === 'gallery' ? 'border-dustyrose text-dustyrose' : 'border-transparent text-neutral-400'}`}>
           Gallery
+        </button>
+        <button onClick={() => setActiveTab('about')} className={`flex-1 min-w-[100px] py-4 text-center text-sm font-semibold border-b-2 ${activeTab === 'about' ? 'border-dustyrose text-dustyrose' : 'border-transparent text-neutral-400'}`}>
+          About Page
         </button>
       </div>
 
@@ -303,8 +357,8 @@ const Admin = () => {
                               </td>
                               <td className="p-4">
                                 <span className={`px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-wider ${b.status === 'confirmed' ? 'bg-green-100 text-green-700' :
-                                    b.status === 'cancelled' ? 'bg-red-100 text-red-700' :
-                                      'bg-yellow-100 text-yellow-700'
+                                  b.status === 'cancelled' ? 'bg-red-100 text-red-700' :
+                                    'bg-yellow-100 text-yellow-700'
                                   }`}>
                                   {b.status}
                                 </span>
@@ -466,6 +520,95 @@ const Admin = () => {
                       </div>
                     </div>
                   )}
+                </div>
+              </motion.div>
+            )}
+
+            {/* ABOUT TAB */}
+            {activeTab === 'about' && (
+              <motion.div key="about" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }}>
+                <header className="mb-8">
+                  <h2 className="font-display text-3xl text-neutral-800">Edit About Page</h2>
+                  <p className="text-neutral-500">Update the text and image shown in the About section on the main website.</p>
+                </header>
+
+                <div className="bg-white rounded-xl shadow-sm border border-neutral-200 p-6 md:p-8 max-w-4xl">
+                  <form onSubmit={handleSaveAbout} className="space-y-6">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                      <div>
+                        <label className="block text-sm font-medium text-neutral-700 mb-2">Display Name</label>
+                        <input
+                          type="text"
+                          name="name"
+                          value={aboutData.name}
+                          onChange={handleAboutChange}
+                          required
+                          className="w-full px-4 py-3 rounded-lg bg-neutral-50 border border-neutral-300 focus:border-dustyrose focus:ring-1 focus:ring-dustyrose focus:outline-none transition-colors"
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-sm font-medium text-neutral-700 mb-2">Professional Title</label>
+                        <input
+                          type="text"
+                          name="title"
+                          value={aboutData.title}
+                          onChange={handleAboutChange}
+                          required
+                          className="w-full px-4 py-3 rounded-lg bg-neutral-50 border border-neutral-300 focus:border-dustyrose focus:ring-1 focus:ring-dustyrose focus:outline-none transition-colors"
+                        />
+                      </div>
+                    </div>
+
+                    <div>
+                      <label className="block text-sm font-medium text-neutral-700 mb-2">Profile Image URL</label>
+                      <input
+                        type="text"
+                        name="image_url"
+                        value={aboutData.image_url}
+                        onChange={handleAboutChange}
+                        placeholder="/uploads/your-image.jpeg OR https://example.com/image.jpg"
+                        required
+                        className="w-full px-4 py-3 rounded-lg bg-neutral-50 border border-neutral-300 focus:border-dustyrose focus:ring-1 focus:ring-dustyrose focus:outline-none transition-colors"
+                      />
+                      <p className="mt-2 text-xs text-neutral-500">
+                        You can upload an image using the Gallery Manager first, then paste the URL here.
+                      </p>
+                    </div>
+
+                    <div>
+                      <label className="block text-sm font-medium text-neutral-700 mb-2">Bio - Paragraph 1</label>
+                      <textarea
+                        name="bio_p1"
+                        value={aboutData.bio_p1}
+                        onChange={handleAboutChange}
+                        required
+                        rows="4"
+                        className="w-full px-4 py-3 rounded-lg bg-neutral-50 border border-neutral-300 focus:border-dustyrose focus:ring-1 focus:ring-dustyrose focus:outline-none transition-colors resize-y"
+                      ></textarea>
+                    </div>
+
+                    <div>
+                      <label className="block text-sm font-medium text-neutral-700 mb-2">Bio - Paragraph 2</label>
+                      <textarea
+                        name="bio_p2"
+                        value={aboutData.bio_p2}
+                        onChange={handleAboutChange}
+                        required
+                        rows="4"
+                        className="w-full px-4 py-3 rounded-lg bg-neutral-50 border border-neutral-300 focus:border-dustyrose focus:ring-1 focus:ring-dustyrose focus:outline-none transition-colors resize-y"
+                      ></textarea>
+                    </div>
+
+                    <div className="pt-4 border-t border-neutral-200">
+                      <button
+                        type="submit"
+                        disabled={savingAbout}
+                        className="flex items-center gap-2 bg-dustyrose text-neutral-900 font-semibold px-8 py-3 rounded-lg hover:bg-champagne transition-colors shadow-sm disabled:opacity-50"
+                      >
+                        {savingAbout ? <span className="animate-pulse">Saving Changes...</span> : <><CheckCircle2 className="w-5 h-5" /> Save Changes</>}
+                      </button>
+                    </div>
+                  </form>
                 </div>
               </motion.div>
             )}
