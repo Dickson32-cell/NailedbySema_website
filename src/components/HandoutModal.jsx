@@ -30,7 +30,8 @@ const HandoutModal = ({ isOpen, onClose }) => {
 
                 // Trigger file download
                 const link = document.createElement('a')
-                link.href = '/Training_HandOut.pdf'
+                link.href = 'https://csopcqjsaoxvieepuaqk.supabase.co/storage/v1/object/public/handout_pdfs/Training_HandOut.pdf'
+                link.target = '_blank' // Important for external URLs
                 link.download = 'Sema_Training_HandOut.pdf'
                 document.body.appendChild(link)
                 link.click()

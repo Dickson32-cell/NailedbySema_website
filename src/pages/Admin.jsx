@@ -7,7 +7,8 @@ import {
   uploadGalleryMedia,
   deleteGalleryMedia,
   fetchAboutData,
-  updateAboutData
+  updateAboutData,
+  fetchServices
 } from '../lib/supabase'
 import {
   LayoutDashboard,
@@ -32,12 +33,14 @@ const Admin = () => {
   const [bookings, setBookings] = useState([])
   const [handoutCodes, setHandoutCodes] = useState([])
   const [galleryItems, setGalleryItems] = useState([])
+  const [services, setServices] = useState([])
 
   // Loading states
   const [loading, setLoading] = useState(false)
   const [uploading, setUploading] = useState(false)
   const [savingAbout, setSavingAbout] = useState(false)
   const [generatedCode, setGeneratedCode] = useState(null)
+  const [uploadCategory, setUploadCategory] = useState('All')
 
   // About Section Form State
   const [aboutData, setAboutData] = useState({
@@ -74,9 +77,19 @@ const Admin = () => {
       fetchBookingsData(),
       fetchHandoutData(),
       fetchGalleryData(),
+      fetchServicesData(),
       loadAboutData()
     ])
     setLoading(false)
+  }
+
+  const fetchServicesData = async () => {
+    try {
+      const data = await fetchServices()
+      if (data) setServices(data)
+    } catch (e) {
+      console.error(e)
+    }
   }
 
 
@@ -183,8 +196,7 @@ const Admin = () => {
     }
 
     setUploading(true)
-    const categoryPrompt = prompt('Enter a category for this media (or leave empty for "All"):', 'All')
-    const finalCategory = categoryPrompt ? categoryPrompt.trim() : 'All'
+    const finalCategory = uploadCategory
 
     const result = await uploadGalleryMedia(file, finalCategory)
 
@@ -463,7 +475,18 @@ const Admin = () => {
                     <h2 className="font-display text-3xl text-neutral-800">Gallery Manager</h2>
                     <p className="text-neutral-500">Live-upload pictures or videos straight to the main website.</p>
                   </div>
-                  <div>
+                  <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
+                    <select
+                      value={uploadCategory}
+                      onChange={(e) => setUploadCategory(e.target.value)}
+                      disabled={uploading}
+                      className="px-4 py-3 rounded-lg bg-white border border-neutral-300 focus:border-dustyrose focus:outline-none focus:ring-1 focus:ring-dustyrose text-neutral-700 shadow-sm"
+                    >
+                      <option value="All">All Categories</option>
+                      {services.map(s => (
+                        <option key={s.id} value={s.category}>{s.category}</option>
+                      ))}
+                    </select>
                     <input
                       type="file"
                       accept="image/*,video/*"
@@ -475,7 +498,7 @@ const Admin = () => {
                     <button
                       onClick={() => fileInputRef.current?.click()}
                       disabled={uploading}
-                      className="flex items-center gap-2 bg-dustyrose text-neutral-900 font-semibold px-6 py-3 rounded-lg hover:bg-champagne transition-colors shadow-sm disabled:opacity-50"
+                      className="flex items-center gap-2 bg-dustyrose text-neutral-900 font-semibold px-6 py-3 rounded-lg hover:bg-champagne transition-colors shadow-sm disabled:opacity-50 whitespace-nowrap"
                     >
                       {uploading ? <span className="animate-pulse">Uploading...</span> : <><UploadCloud className="w-5 h-5" /> Upload Media</>}
                     </button>
