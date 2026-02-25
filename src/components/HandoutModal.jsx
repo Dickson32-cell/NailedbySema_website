@@ -28,12 +28,12 @@ const HandoutModal = ({ isOpen, onClose }) => {
                 setStatus('success')
                 setMessage('Code verified! Click the button below if the download does not start automatically.')
 
-                // Try to trigger file download automatically
+                // Try to trigger file open automatically
                 try {
                     const link = document.createElement('a')
                     link.href = 'https://csopcqjsaoxvieepuaqk.supabase.co/storage/v1/object/public/handout_pdfs/Training%20HandOut.pdf'
                     link.target = '_blank' // Important for external URLs
-                    link.download = 'Sema_Training_HandOut.pdf'
+                    link.rel = 'noopener noreferrer'
                     document.body.appendChild(link)
                     link.click()
                     document.body.removeChild(link)
@@ -135,7 +135,6 @@ const HandoutModal = ({ isOpen, onClose }) => {
                                         href="https://csopcqjsaoxvieepuaqk.supabase.co/storage/v1/object/public/handout_pdfs/Training%20HandOut.pdf"
                                         target="_blank"
                                         rel="noopener noreferrer"
-                                        download="Sema_Training_HandOut.pdf"
                                         className="w-full bg-green-600 text-white font-semibold py-3 rounded-xl flex items-center justify-center gap-2 hover:bg-green-700 transition-all shadow-md"
                                         onClick={() => {
                                             setTimeout(() => {
