@@ -117,6 +117,17 @@ const Admin = () => {
     }
   }
 
+  const handleDeleteBooking = async (id) => {
+    if (!window.confirm('Are you sure you want to completely delete this booking request? This action cannot be undone.')) return
+
+    try {
+      await supabase.from('bookings').delete().eq('id', id)
+      fetchBookingsData()
+    } catch (e) {
+      console.error(e)
+    }
+  }
+
   // ==========================================
   // HANDOUTS & PAYMENTS DATA
   // ==========================================
@@ -368,25 +379,25 @@ const Admin = () => {
                                 <div className="text-sm text-neutral-500">{b.booking_time}</div>
                               </td>
                               <td className="p-4">
-                                <span className={`px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-wider ${b.status === 'confirmed' ? 'bg-green-100 text-green-700' :
-                                  b.status === 'cancelled' ? 'bg-red-100 text-red-700' :
+                                <span className={`px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-wider ${['confirmed', 'approved'].includes(b.status) ? 'bg-green-100 text-green-700' :
+                                  b.status === 'cancelled' ? 'bg-neutral-100 text-neutral-700' :
                                     'bg-yellow-100 text-yellow-700'
                                   }`}>
-                                  {b.status}
+                                  {b.status === 'confirmed' ? 'approved' : b.status}
                                 </span>
                               </td>
                               <td className="p-4">
                                 <div className="flex gap-2">
-                                  {b.status !== 'confirmed' && (
-                                    <button onClick={() => updateBookingStatus(b.id, 'confirmed')} className="p-2 text-green-600 hover:bg-green-50 rounded-lg transition-colors" title="Confirm">
+                                  {b.status !== 'confirmed' && b.status !== 'approved' && (
+                                    <button onClick={() => updateBookingStatus(b.id, 'approved')} className="flex items-center gap-1 p-2 text-green-600 hover:bg-green-50 rounded-lg transition-colors border border-transparent hover:border-green-200" title="Approve">
                                       <CheckCircle2 className="w-5 h-5" />
+                                      <span className="text-sm font-semibold hidden sm:inline">Approve</span>
                                     </button>
                                   )}
-                                  {b.status !== 'cancelled' && (
-                                    <button onClick={() => updateBookingStatus(b.id, 'cancelled')} className="p-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors" title="Cancel">
-                                      <XCircle className="w-5 h-5" />
-                                    </button>
-                                  )}
+                                  <button onClick={() => handleDeleteBooking(b.id)} className="flex items-center gap-1 p-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors border border-transparent hover:border-red-200" title="Delete">
+                                    <Trash2 className="w-5 h-5" />
+                                    <span className="text-sm font-semibold hidden sm:inline">Delete</span>
+                                  </button>
                                 </div>
                               </td>
                             </tr>
