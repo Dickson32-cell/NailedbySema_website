@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { fetchGalleryMedia } from '../lib/supabase'
+import { X, ChevronLeft, ChevronRight } from 'lucide-react'
 
 const categories = ['All', 'Gel', 'Acrylic', 'Nail Art', 'Pedicure']
 
@@ -60,10 +61,10 @@ const Gallery = () => {
               onClick={() => setActiveCategory(category)}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              className={`font-body px-6 py-2 rounded-full transition-all duration-300 ${
+              className={`font-body px-6 py-2 rounded-full transition-all duration-300 cursor-pointer ${
                 activeCategory === category
                   ? 'bg-dustyrose text-charcoal shadow-lg shadow-dustyrose/30'
-                  : 'bg-porcelain text-charcoal/70 hover:bg-dustyrose/20'
+                  : 'bg-white/70 backdrop-blur-md text-charcoal/70 hover:bg-dustyrose/20 border border-white/20'
               }`}
             >
               {category}
@@ -147,11 +148,11 @@ const Gallery = () => {
                 initial={{ scale: 0 }}
                 animate={{ scale: 1 }}
                 exit={{ scale: 0 }}
-                className="absolute top-6 right-6 w-12 h-12 bg-porcelain/10 hover:bg-porcelain/20 rounded-full 
-                           flex items-center justify-center text-white text-2xl transition-colors duration-300"
+                className="absolute top-6 right-6 w-12 h-12 bg-white/10 hover:bg-white/20 backdrop-blur-md rounded-full 
+                           flex items-center justify-center text-white transition-colors duration-300 cursor-pointer border border-white/20"
                 onClick={() => setSelectedMedia(null)}
               >
-                &times;
+                <X size={24} />
               </motion.button>
 
               {/* Media */}

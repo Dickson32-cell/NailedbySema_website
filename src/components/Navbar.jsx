@@ -50,7 +50,7 @@ const Navbar = () => {
             >
               <Link
                 to="/"
-                className={`font-display text-2xl font-semibold transition-colors duration-300 ${
+                className={`font-display text-2xl font-semibold transition-colors duration-300 cursor-pointer ${
                   scrolled ? 'text-charcoal' : 'text-porcelain'
                 }`}
               >
@@ -58,6 +58,7 @@ const Navbar = () => {
                   initial={{ opacity: 0, y: -10 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.5, delay: 0.2 }}
+                  className="inline-block"
                 >
                   Nailedby
                 </motion.span>
@@ -102,7 +103,7 @@ const Navbar = () => {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.5 }}
-              className={`md:hidden p-2 rounded-lg transition-all duration-300 ${
+              className={`md:hidden p-2 rounded-lg transition-all duration-300 cursor-pointer ${
                 scrolled 
                   ? 'text-charcoal hover:bg-dustyrose/10' 
                   : 'text-porcelain hover:bg-white/10'

@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { FaStar, FaChevronLeft, FaChevronRight } from 'react-icons/fa'
 import { submitReview, fetchReviews } from '../lib/supabase'
+import { Check, Heart } from 'lucide-react'
 
 const staticReviews = [
   { id: 's1', name: 'Adjoa', rating: 5, service: 'Gel Extensions', text: "Sema is amazing! My nails have never looked better. She's so patient and talented." },
@@ -100,7 +101,7 @@ const Testimonials = () => {
             onClick={prevReview}
             className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 md:-translate-x-12 z-10
                        w-10 h-10 bg-white shadow-lg rounded-full flex items-center justify-center
-                       hover:bg-dustyrose hover:text-white transition-all duration-300"
+                       hover:bg-dustyrose hover:text-white transition-all duration-300 cursor-pointer"
           >
             <FaChevronLeft />
           </button>
@@ -108,7 +109,7 @@ const Testimonials = () => {
             onClick={nextReview}
             className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 md:translate-x-12 z-10
                        w-10 h-10 bg-white shadow-lg rounded-full flex items-center justify-center
-                       hover:bg-dustyrose hover:text-white transition-all duration-300"
+                       hover:bg-dustyrose hover:text-white transition-all duration-300 cursor-pointer"
           >
             <FaChevronRight />
           </button>
@@ -204,14 +205,16 @@ const Testimonials = () => {
             >
               {submitted ? (
                 <div className="text-center py-10">
-                  <motion.p 
-                    className="font-display text-3xl text-dustyrose mb-4"
+                  <motion.div 
+                    className="flex items-center justify-center gap-2 font-display text-3xl text-dustyrose mb-4"
                     initial={{ scale: 0 }}
                     animate={{ scale: 1 }}
                     transition={{ type: 'spring' }}
                   >
-                    Thank you! 💖
-                  </motion.p>
+                    <Check size={32} />
+                    <span>Thank you!</span>
+                    <Heart size={28} className="text-champagne" />
+                  </motion.div>
                   <p className="font-body text-charcoal/70">Your review has been posted.</p>
                 </div>
               ) : (

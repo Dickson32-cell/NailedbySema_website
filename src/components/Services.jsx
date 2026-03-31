@@ -1,10 +1,10 @@
 import { motion } from 'framer-motion'
-import { Download } from 'lucide-react'
+import { Download, Sparkles, Star, Heart, Home, BookOpen, Palette, Eye, Wand2 } from 'lucide-react'
 
 const serviceCategories = [
   {
     category: 'Manicure & Pedicure',
-    emoji: '💅',
+    icon: Sparkles,
     items: [
       { name: 'Manicure', price: 'GHS 60' },
       { name: 'Classic Pedicure', price: 'GHS 130' },
@@ -15,7 +15,7 @@ const serviceCategories = [
   },
   {
     category: 'Stick-On Nails',
-    emoji: '🩷',
+    icon: Heart,
     items: [
       { name: 'Stick-On Short', price: 'GHS 100' },
       { name: 'Stick-On Medium', price: 'GHS 120' },
@@ -25,7 +25,7 @@ const serviceCategories = [
   },
   {
     category: 'Acrylic Nails',
-    emoji: '✦',
+    icon: Star,
     items: [
       { name: 'Acrylic Short', price: 'GHS 150' },
       { name: 'Acrylic Medium', price: 'GHS 180' },
@@ -35,7 +35,7 @@ const serviceCategories = [
   },
   {
     category: 'Builder Gel',
-    emoji: '🤍',
+    icon: Wand2,
     items: [
       { name: 'Builder Gel Short', price: 'GHS 80' },
       { name: 'Builder Gel Medium', price: 'GHS 120' },
@@ -45,7 +45,7 @@ const serviceCategories = [
   },
   {
     category: 'Poly Gel',
-    emoji: '✧',
+    icon: Sparkles,
     items: [
       { name: 'Poly Gel Short', price: 'GHS 130' },
       { name: 'Poly Gel Medium', price: 'GHS 160' },
@@ -55,7 +55,7 @@ const serviceCategories = [
   },
   {
     category: 'Nail Art',
-    emoji: '🎨',
+    icon: Palette,
     items: [
       { name: 'Nail Art Design', price: 'GHS 30 – 100' },
     ],
@@ -63,7 +63,7 @@ const serviceCategories = [
   },
   {
     category: 'Lashes',
-    emoji: '✨',
+    icon: Sparkles,
     items: [
       { name: 'Classic Set', price: 'GHS 150' },
       { name: 'Classic Cateye', price: 'GHS 180' },
@@ -79,7 +79,7 @@ const serviceCategories = [
   },
   {
     category: 'Brows',
-    emoji: '🤍',
+    icon: Eye,
     items: [
       { name: 'Ombré Brows', price: 'GHS 500' },
     ],
@@ -87,7 +87,7 @@ const serviceCategories = [
   },
   {
     category: 'Nails Training',
-    emoji: '🎓',
+    icon: BookOpen,
     items: [
       { name: '1 Month Course', price: 'GHS 1,500' },
       { name: '3 Months Course', price: 'GHS 3,500' },
@@ -97,7 +97,7 @@ const serviceCategories = [
   },
   {
     category: 'Home Service',
-    emoji: '🏠',
+    icon: Home,
     items: [
       { name: 'Travel Fee (any service)', price: '+ GHS 40' },
     ],
@@ -136,26 +136,27 @@ const Services = ({ onBook, onDownloadHandout }) => {
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: groupIndex * 0.1 }}
               whileHover={{ y: -8 }}
-              className="card-lift gradient-border bg-white rounded-2xl p-6 shadow-lg overflow-hidden"
+              className="card-lift gradient-border bg-white rounded-2xl p-6 shadow-lg overflow-hidden cursor-pointer"
             >
               {/* Popular Badge */}
               {group.popular && (
                 <div className="absolute -top-0 right-4">
-                  <span className="bg-champagne text-charcoal text-xs font-bold px-3 py-1 rounded-b-lg shadow-md">
-                    ✨ Popular
+                  <span className="bg-champagne text-charcoal text-xs font-bold px-3 py-1 rounded-b-lg shadow-md flex items-center gap-1">
+                    <Sparkles size={12} />
+                    Popular
                   </span>
                 </div>
               )}
 
               {/* Header */}
               <div className="flex items-center gap-3 mb-5 pb-4 border-b border-charcoal/10">
-                <motion.span 
-                  className="text-3xl"
+                <motion.div 
+                  className="w-10 h-10 flex items-center justify-center text-dustyrose"
                   whileHover={{ scale: 1.2, rotate: [0, -10, 10, 0] }}
                   transition={{ duration: 0.5 }}
                 >
-                  {group.emoji}
-                </motion.span>
+                  <group.icon size={28} />
+                </motion.div>
                 <h3 className="font-display text-xl text-charcoal">{group.category}</h3>
               </div>
 
@@ -179,7 +180,7 @@ const Services = ({ onBook, onDownloadHandout }) => {
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
                 className="w-full bg-charcoal text-porcelain font-body font-semibold py-3 rounded-full
-                           hover:bg-dustyrose transition-colors duration-300"
+                           hover:bg-dustyrose transition-colors duration-300 cursor-pointer"
               >
                 Book Now
               </motion.button>
@@ -192,9 +193,9 @@ const Services = ({ onBook, onDownloadHandout }) => {
                   whileTap={{ scale: 0.98 }}
                   className="w-full mt-3 bg-white border-2 border-dustyrose text-dustyrose font-body font-semibold py-3 rounded-full 
                              hover:bg-dustyrose hover:text-white transition-colors duration-300 
-                             flex items-center justify-center gap-2"
+                             flex items-center justify-center gap-2 cursor-pointer"
                 >
-                  Buy Training Handout (200 GHS) <Download className="w-5 h-5" />
+                  Buy Training Handout (200 GHS) <Download size={18} />
                 </motion.button>
               )}
             </motion.div>
