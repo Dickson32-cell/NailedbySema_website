@@ -108,11 +108,21 @@ const About = () => {
             viewport={{ once: true }}
             transition={{ duration: 0.8, delay: 0.2 }}
           >
-            <div className="mb-6">
-              <h2 className="font-display text-4xl md:text-5xl text-charcoal mb-2">
-                Meet <span className="text-dustyrose italic">{aboutData.name}</span>
+            <div className="mb-8">
+              <motion.div
+                initial={{ opacity: 0, scale: 0.95 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5 }}
+                className="inline-block mb-4 px-4 py-1.5 rounded-full border border-dustyrose/30 bg-white/50 backdrop-blur-sm"
+              >
+                <span className="text-dustyrose text-xs font-body tracking-[0.2em] uppercase">About</span>
+              </motion.div>
+
+              <h2 className="font-display text-4xl md:text-5xl lg:text-6xl text-charcoal mb-4 leading-tight">
+                Meet <span className="holo-text italic">{aboutData.name}</span>
               </h2>
-              <div className="w-16 h-0.5 bg-gradient-to-r from-dustyrose to-champagne rounded" />
+              <div className="nail-drip w-20 h-1 bg-gradient-to-r from-transparent via-dustyrose to-transparent rounded-full" />
             </div>
 
             <p className="font-body text-lg text-charcoal/80 mb-6 leading-relaxed whitespace-pre-wrap">
@@ -132,41 +142,50 @@ const About = () => {
               <span className="font-body font-semibold">Home Service Available</span>
             </motion.div>
 
-            {/* Social Links - More Interactive */}
-            <div className="flex gap-4">
-              <motion.a
-                href="https://snapchat.com/t/sYn4ueqU"
-                target="_blank"
-                rel="noopener noreferrer"
-                whileHover={{ y: -5, scale: 1.1 }}
-                whileTap={{ scale: 0.95 }}
-                className="w-14 h-14 bg-charcoal text-porcelain rounded-full flex items-center justify-center
-                           hover:bg-dustyrose transition-colors duration-300 shadow-lg hover:shadow-dustyrose/30"
-              >
-                <FaSnapchat size={22} />
-              </motion.a>
-              <motion.a
-                href="https://www.tiktok.com/@nailtechinkoforidua"
-                target="_blank"
-                rel="noopener noreferrer"
-                whileHover={{ y: -5, scale: 1.1 }}
-                whileTap={{ scale: 0.95 }}
-                className="w-14 h-14 bg-charcoal text-porcelain rounded-full flex items-center justify-center
-                           hover:bg-dustyrose transition-colors duration-300 shadow-lg hover:shadow-dustyrose/30"
-              >
-                <FaTiktok size={22} />
-              </motion.a>
-              <motion.a
-                href="https://wa.me/+233539649949"
-                target="_blank"
-                rel="noopener noreferrer"
-                whileHover={{ y: -5, scale: 1.1 }}
-                whileTap={{ scale: 0.95 }}
-                className="w-14 h-14 bg-charcoal text-porcelain rounded-full flex items-center justify-center
-                           hover:bg-dustyrose transition-colors duration-300 shadow-lg hover:shadow-dustyrose/30"
-              >
-                <FaWhatsapp size={22} />
-              </motion.a>
+            {/* Social Links - Luxury Style */}
+            <div>
+              <p className="font-body text-sm text-charcoal/60 mb-4 tracking-wide uppercase">Connect With Me</p>
+              <div className="flex gap-4">
+                <motion.a
+                  href="https://snapchat.com/t/sYn4ueqU"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  whileHover={{ y: -8, scale: 1.15 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="liquid-metal mirror-reflect w-16 h-16 bg-gradient-to-br from-charcoal to-charcoal/80 text-porcelain rounded-2xl flex items-center justify-center
+                             hover:from-dustyrose hover:to-champagne hover:text-charcoal
+                             transition-all duration-500 shadow-lg hover:shadow-2xl hover:shadow-dustyrose/40
+                             border border-white/10 hover:border-white/30"
+                >
+                  <FaSnapchat size={24} />
+                </motion.a>
+                <motion.a
+                  href="https://www.tiktok.com/@nailtechinkoforidua"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  whileHover={{ y: -8, scale: 1.15 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="liquid-metal mirror-reflect w-16 h-16 bg-gradient-to-br from-charcoal to-charcoal/80 text-porcelain rounded-2xl flex items-center justify-center
+                             hover:from-dustyrose hover:to-champagne hover:text-charcoal
+                             transition-all duration-500 shadow-lg hover:shadow-2xl hover:shadow-dustyrose/40
+                             border border-white/10 hover:border-white/30"
+                >
+                  <FaTiktok size={24} />
+                </motion.a>
+                <motion.a
+                  href="https://wa.me/+233539649949"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  whileHover={{ y: -8, scale: 1.15 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="liquid-metal mirror-reflect w-16 h-16 bg-gradient-to-br from-charcoal to-charcoal/80 text-porcelain rounded-2xl flex items-center justify-center
+                             hover:from-dustyrose hover:to-champagne hover:text-charcoal
+                             transition-all duration-500 shadow-lg hover:shadow-2xl hover:shadow-dustyrose/40
+                             border border-white/10 hover:border-white/30"
+                >
+                  <FaWhatsapp size={24} />
+                </motion.a>
+              </div>
             </div>
           </motion.div>
         </div>

@@ -77,48 +77,96 @@ const Hero = () => {
       </div>
 
       {/* Content */}
-      <div className="relative z-10 text-center px-4 max-w-4xl mx-auto">
+      <div className="relative z-10 text-center px-4 max-w-5xl mx-auto">
+        {/* Small editorial badge */}
+        <motion.div
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.6, delay: 0.1 }}
+          className="mb-6 inline-flex items-center gap-2 px-4 py-2 rounded-full border border-porcelain/30 backdrop-blur-sm"
+        >
+          <div className="w-2 h-2 rounded-full bg-dustyrose animate-pulse" />
+          <span className="text-porcelain/90 text-sm font-body tracking-widest uppercase">Professional Nail Artistry</span>
+        </motion.div>
+
         <motion.h1
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2 }}
-          className="font-display text-5xl md:text-7xl lg:text-8xl text-porcelain mb-6 leading-tight"
+          className="font-display text-5xl md:text-7xl lg:text-8xl text-porcelain mb-6 leading-[1.1] tracking-tight"
         >
-          Your nails. <br />
-          <span className="italic text-dustyrose">Your story.</span>
+          Your nails.{' '}
+          <span className="holo-text italic block md:inline">Your story.</span>
         </motion.h1>
 
-        <motion.p
+        <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.4 }}
-          className="font-body text-xl md:text-2xl text-porcelain/90 mb-10 max-w-2xl mx-auto"
+          className="mb-10 max-w-3xl mx-auto"
         >
-          Sema — Gel nails, nail art, luxury pedicures & ombre brows opposite Vineyard Hostel, Koforidua
-        </motion.p>
+          <p className="font-body text-lg md:text-xl text-porcelain/95 mb-3 leading-relaxed">
+            Sema — Where artistry meets elegance
+          </p>
+          <p className="font-body text-base md:text-lg text-porcelain/80 leading-relaxed">
+            Gel nails · Nail art · Luxury pedicures · Ombre brows
+          </p>
+          <p className="font-body text-sm md:text-base text-champagne/90 mt-2 tracking-wide">
+            Opposite Vineyard Hostel, Koforidua
+          </p>
+        </motion.div>
 
-        {/* Premium CTA Button with Shimmer/Glow */}
+        {/* Premium CTA Button with Liquid Metal Effect */}
         <motion.button
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.6 }}
           onClick={scrollToBooking}
-          className="btn-premium relative bg-dustyrose text-charcoal font-body font-semibold px-12 py-5 rounded-full
-                     hover:bg-champagne transition-all duration-500 
-                     shadow-lg hover:shadow-2xl hover:shadow-champagne/30
-                     transform hover:scale-105"
-          whileHover={{ 
-            boxShadow: '0 0 30px rgba(201, 169, 110, 0.6), 0 0 60px rgba(201, 169, 110, 0.3)' 
+          className="btn-premium liquid-metal mirror-reflect relative bg-dustyrose text-charcoal font-body font-semibold px-12 py-5 rounded-full
+                     hover:bg-champagne transition-all duration-500
+                     shadow-lg hover:shadow-2xl hover:shadow-champagne/40
+                     transform hover:scale-105 luxury-pulse"
+          whileHover={{
+            boxShadow: '0 0 30px rgba(201, 169, 110, 0.7), 0 0 60px rgba(201, 169, 110, 0.4), 0 10px 40px rgba(0, 0, 0, 0.3)'
           }}
           whileTap={{ scale: 0.98 }}
         >
-          <span className="relative z-10 flex items-center gap-2">
+          <span className="relative z-10 flex items-center gap-3">
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
             </svg>
-            Book an Appointment
+            <span className="tracking-wide">Book Your Appointment</span>
           </span>
         </motion.button>
+
+        {/* Trust indicators */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.8, delay: 0.8 }}
+          className="mt-10 flex flex-wrap items-center justify-center gap-6 text-porcelain/70 text-sm"
+        >
+          <div className="flex items-center gap-2">
+            <svg className="w-5 h-5 text-champagne" fill="currentColor" viewBox="0 0 20 20">
+              <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+            </svg>
+            <span className="font-body">5-Star Rated</span>
+          </div>
+          <div className="h-4 w-px bg-porcelain/30" />
+          <div className="flex items-center gap-2">
+            <svg className="w-5 h-5 text-champagne" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+            <span className="font-body">Same Day Available</span>
+          </div>
+          <div className="h-4 w-px bg-porcelain/30" />
+          <div className="flex items-center gap-2">
+            <svg className="w-5 h-5 text-champagne" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+            </svg>
+            <span className="font-body">Home Service Available</span>
+          </div>
+        </motion.div>
       </div>
 
       {/* Scroll Indicator */}

@@ -36,38 +36,59 @@ const Gallery = () => {
           transition={{ duration: 0.6 }}
           className="text-center mb-16"
         >
-          <h2 className="font-display text-4xl md:text-5xl text-charcoal mb-4">
-            Our <span className="text-dustyrose italic">Gallery</span>
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: 0.2 }}
+            className="inline-block mb-6 px-4 py-1.5 rounded-full border border-dustyrose/30 bg-white/70 backdrop-blur-sm"
+          >
+            <span className="text-dustyrose text-xs font-body tracking-[0.2em] uppercase">Portfolio</span>
+          </motion.div>
+
+          <h2 className="font-display text-4xl md:text-5xl lg:text-6xl text-charcoal mb-4 leading-tight">
+            Artistry in <span className="holo-text italic">Motion</span>
           </h2>
-          <div className="flex justify-center mb-4">
-            <div className="w-16 h-0.5 bg-gradient-to-r from-dustyrose to-champagne rounded" />
+          <div className="flex justify-center mb-6">
+            <div className="nail-drip w-20 h-1 bg-gradient-to-r from-transparent via-dustyrose to-transparent rounded-full" />
           </div>
-          <p className="font-body text-charcoal/70 max-w-2xl mx-auto">
-            Explore our collection of stunning nail designs and transformations
+          <p className="font-body text-base md:text-lg text-charcoal/70 max-w-2xl mx-auto leading-relaxed">
+            Explore our collection of stunning nail designs and transformations.<br className="hidden md:block" />
+            <span className="text-champagne/80 text-sm">Each creation tells a unique story</span>
           </p>
         </motion.div>
 
-        {/* Filter Tabs */}
-        <motion.div 
+        {/* Filter Tabs with Luxury Style */}
+        <motion.div
           initial={{ opacity: 0, y: 10 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.4 }}
-          className="flex flex-wrap justify-center gap-3 mb-12"
+          className="flex flex-wrap justify-center gap-3 mb-16"
         >
           {categories.map((category, index) => (
             <motion.button
               key={category}
               onClick={() => setActiveCategory(category)}
-              whileHover={{ scale: 1.05 }}
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ delay: index * 0.05 }}
+              whileHover={{ scale: 1.08, y: -2 }}
               whileTap={{ scale: 0.95 }}
-              className={`font-body px-6 py-2 rounded-full transition-all duration-300 cursor-pointer ${
+              className={`relative font-body px-8 py-3 rounded-full transition-all duration-500 cursor-pointer overflow-hidden ${
                 activeCategory === category
-                  ? 'bg-dustyrose text-charcoal shadow-lg shadow-dustyrose/30'
-                  : 'bg-white/70 backdrop-blur-md text-charcoal/70 hover:bg-dustyrose/20 border border-white/20'
+                  ? 'bg-gradient-to-r from-dustyrose to-champagne text-charcoal shadow-lg shadow-dustyrose/40 border border-white/50'
+                  : 'bg-white/80 backdrop-blur-md text-charcoal/70 hover:bg-white hover:shadow-md border border-dustyrose/20'
               }`}
             >
-              {category}
+              {activeCategory === category && (
+                <motion.div
+                  layoutId="activeCategory"
+                  className="absolute inset-0 bg-gradient-to-r from-dustyrose to-champagne rounded-full -z-10"
+                  transition={{ type: 'spring', bounce: 0.2, duration: 0.6 }}
+                />
+              )}
+              <span className="relative z-10 font-medium tracking-wide">{category}</span>
             </motion.button>
           ))}
         </motion.div>
@@ -90,14 +111,15 @@ const Gallery = () => {
                   initial={{ opacity: 0, scale: 0.8 }}
                   animate={{ opacity: 1, scale: 1 }}
                   exit={{ opacity: 0, scale: 0.8 }}
-                  transition={{ duration: 0.4, delay: index * 0.05 }}
-                  className="gallery-item relative overflow-hidden rounded-2xl cursor-pointer shadow-sm hover:shadow-xl group"
+                  transition={{ duration: 0.5, delay: index * 0.05 }}
+                  whileHover={{ y: -8, scale: 1.02 }}
+                  className="gallery-item relative overflow-hidden rounded-3xl cursor-pointer shadow-md hover:shadow-2xl group border border-white/50"
                   onClick={() => setSelectedMedia(item)}
                 >
                   {item.type === 'video' ? (
                     <video
                       src={item.url}
-                      className="w-full h-72 object-cover transition-transform duration-500 group-hover:scale-110"
+                      className="w-full h-72 object-cover transition-all duration-700 group-hover:scale-110 group-hover:brightness-110"
                       muted
                       loop
                       playsInline
@@ -108,25 +130,34 @@ const Gallery = () => {
                     <img
                       src={item.url}
                       alt={`Nail art ${index + 1}`}
-                      className="w-full h-72 object-cover transition-transform duration-500 group-hover:scale-110"
+                      className="w-full h-72 object-cover transition-all duration-700 group-hover:scale-110 group-hover:brightness-110"
                     />
                   )}
-                  
-                  {/* Hover Overlay with Category Tag */}
-                  <motion.div 
-                    initial={{ opacity: 0 }}
-                    whileHover={{ opacity: 1 }}
-                    className="absolute inset-0 bg-gradient-to-t from-charcoal/80 via-charcoal/20 to-transparent 
-                               opacity-0 group-hover:opacity-100 transition-opacity duration-300
-                               flex items-end justify-center pb-6"
+
+                  {/* Gradient Overlay - Always Visible */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-charcoal/40 via-transparent to-transparent opacity-60 group-hover:opacity-0 transition-opacity duration-300" />
+
+                  {/* Hover Overlay with Enhanced Category Tag */}
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    className="absolute inset-0 bg-gradient-to-t from-charcoal/90 via-charcoal/30 to-transparent
+                               opacity-0 group-hover:opacity-100 transition-all duration-500
+                               flex items-end justify-center pb-8"
                   >
-                    <span className="bg-dustyrose/90 text-charcoal text-sm font-medium px-4 py-2 rounded-full backdrop-blur-sm">
+                    <motion.span
+                      initial={{ y: 10, opacity: 0 }}
+                      whileHover={{ y: 0, opacity: 1 }}
+                      className="bg-gradient-to-r from-dustyrose to-champagne text-charcoal text-sm font-semibold px-6 py-2.5 rounded-full backdrop-blur-md shadow-lg border border-white/30"
+                    >
                       {item.category || 'Gallery'}
-                    </span>
+                    </motion.span>
                   </motion.div>
 
-                  {/* Shimmer Effect */}
-                  <div className="shimmer-overlay absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                  {/* Liquid Metal Shimmer Effect */}
+                  <div className="shimmer-overlay absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+
+                  {/* Corner Accent */}
+                  <div className="absolute top-0 left-0 w-16 h-16 bg-gradient-to-br from-white/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-br-3xl" />
                 </motion.div>
               ))
             )}

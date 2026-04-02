@@ -192,41 +192,49 @@ const Footer = () => {
                 href="https://snapchat.com/t/sYn4ueqU"
                 target="_blank"
                 rel="noopener noreferrer"
-                whileHover={{ y: -3, scale: 1.1 }}
-                className="w-11 h-11 bg-porcelain/10 rounded-xl flex items-center justify-center
-                           hover:bg-dustyrose transition-colors duration-300"
+                whileHover={{ y: -5, scale: 1.15 }}
+                whileTap={{ scale: 0.95 }}
+                className="liquid-metal mirror-reflect w-12 h-12 bg-porcelain/10 rounded-2xl flex items-center justify-center
+                           hover:bg-gradient-to-br hover:from-dustyrose hover:to-champagne
+                           transition-all duration-500 shadow-md hover:shadow-lg border border-porcelain/5"
               >
-                <FaSnapchat size={18} />
+                <FaSnapchat size={20} />
               </motion.a>
               <motion.a
                 href="https://www.tiktok.com/@nailtechinkoforidua"
                 target="_blank"
                 rel="noopener noreferrer"
-                whileHover={{ y: -3, scale: 1.1 }}
-                className="w-11 h-11 bg-porcelain/10 rounded-xl flex items-center justify-center
-                           hover:bg-dustyrose transition-colors duration-300"
+                whileHover={{ y: -5, scale: 1.15 }}
+                whileTap={{ scale: 0.95 }}
+                className="liquid-metal mirror-reflect w-12 h-12 bg-porcelain/10 rounded-2xl flex items-center justify-center
+                           hover:bg-gradient-to-br hover:from-dustyrose hover:to-champagne
+                           transition-all duration-500 shadow-md hover:shadow-lg border border-porcelain/5"
               >
-                <FaTiktok size={18} />
+                <FaTiktok size={20} />
               </motion.a>
               <motion.a
                 href="https://wa.me/+233539649949"
                 target="_blank"
                 rel="noopener noreferrer"
-                whileHover={{ y: -3, scale: 1.1 }}
-                className="w-11 h-11 bg-porcelain/10 rounded-xl flex items-center justify-center
-                           hover:bg-dustyrose transition-colors duration-300"
+                whileHover={{ y: -5, scale: 1.15 }}
+                whileTap={{ scale: 0.95 }}
+                className="liquid-metal mirror-reflect w-12 h-12 bg-porcelain/10 rounded-2xl flex items-center justify-center
+                           hover:bg-gradient-to-br hover:from-dustyrose hover:to-champagne
+                           transition-all duration-500 shadow-md hover:shadow-lg border border-porcelain/5"
               >
-                <FaWhatsapp size={18} />
+                <FaWhatsapp size={20} />
               </motion.a>
               <motion.a
                 href="https://www.instagram.com/nailedbysema"
                 target="_blank"
                 rel="noopener noreferrer"
-                whileHover={{ y: -3, scale: 1.1 }}
-                className="w-11 h-11 bg-porcelain/10 rounded-xl flex items-center justify-center
-                           hover:bg-dustyrose transition-colors duration-300"
+                whileHover={{ y: -5, scale: 1.15 }}
+                whileTap={{ scale: 0.95 }}
+                className="liquid-metal mirror-reflect w-12 h-12 bg-porcelain/10 rounded-2xl flex items-center justify-center
+                           hover:bg-gradient-to-br hover:from-dustyrose hover:to-champagne
+                           transition-all duration-500 shadow-md hover:shadow-lg border border-porcelain/5"
               >
-                <FaInstagram size={18} />
+                <FaInstagram size={20} />
               </motion.a>
             </div>
 

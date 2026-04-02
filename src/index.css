@@ -67,9 +67,27 @@ body::before {
   position: fixed;
   inset: 0;
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
-  opacity: 0.03;
+  opacity: 0.025;
   pointer-events: none;
   z-index: 9999;
+}
+
+/* Holographic shine effect overlay */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background:
+    linear-gradient(135deg, transparent 0%, rgba(232, 180, 184, 0.03) 25%, transparent 50%, rgba(201, 169, 110, 0.03) 75%, transparent 100%);
+  background-size: 200% 200%;
+  animation: holoShift 15s ease-in-out infinite;
+  pointer-events: none;
+  z-index: 9998;
+}
+
+@keyframes holoShift {
+  0%, 100% { background-position: 0% 0%; }
+  50% { background-position: 100% 100%; }
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -283,4 +301,168 @@ h1, h2, h3, h4, h5, h6 {
 .card-lift:hover {
   transform: translateY(-8px);
   box-shadow: 0 20px 40px rgba(44, 44, 44, 0.15);
+}
+
+/* Liquid metal shine effect */
+@keyframes liquidShine {
+  0% {
+    background-position: -200% center;
+  }
+  100% {
+    background-position: 200% center;
+  }
+}
+
+.liquid-metal {
+  position: relative;
+  overflow: hidden;
+}
+
+.liquid-metal::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    110deg,
+    transparent 20%,
+    rgba(255, 255, 255, 0.2) 30%,
+    rgba(255, 255, 255, 0.4) 40%,
+    rgba(201, 169, 110, 0.3) 50%,
+    rgba(255, 255, 255, 0.4) 60%,
+    rgba(255, 255, 255, 0.2) 70%,
+    transparent 80%
+  );
+  background-size: 200% 100%;
+  animation: liquidShine 8s linear infinite;
+  mix-blend-mode: overlay;
+  pointer-events: none;
+}
+
+/* Holographic gradient text */
+.holo-text {
+  background: linear-gradient(
+    135deg,
+    var(--color-dustyrose) 0%,
+    var(--color-champagne) 25%,
+    var(--color-dustyrose) 50%,
+    #E8C4C8 75%,
+    var(--color-champagne) 100%
+  );
+  background-size: 300% 300%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: holoShift 6s ease-in-out infinite;
+}
+
+/* Nail drip decoration */
+.nail-drip {
+  position: relative;
+}
+
+.nail-drip::after {
+  content: '';
+  position: absolute;
+  bottom: -20px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 2px;
+  height: 20px;
+  background: linear-gradient(180deg, var(--color-dustyrose), transparent);
+  border-radius: 0 0 50% 50%;
+  animation: drip 3s ease-in-out infinite;
+}
+
+@keyframes drip {
+  0%, 100% {
+    height: 15px;
+    opacity: 0.6;
+  }
+  50% {
+    height: 25px;
+    opacity: 1;
+  }
+}
+
+/* Mirror reflection effect */
+.mirror-reflect {
+  position: relative;
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.1);
+}
+
+.mirror-reflect::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 50%;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.1) 0%, transparent 100%);
+  pointer-events: none;
+  border-radius: inherit;
+}
+
+/* Editorial offset title */
+.editorial-title {
+  position: relative;
+  display: inline-block;
+}
+
+.editorial-title::before {
+  content: attr(data-text);
+  position: absolute;
+  top: -4px;
+  left: -4px;
+  color: var(--color-champagne);
+  opacity: 0.15;
+  z-index: -1;
+  font-size: inherit;
+  font-weight: inherit;
+  font-family: inherit;
+}
+
+/* Luxury border pulse */
+@keyframes luxuryPulse {
+  0%, 100% {
+    box-shadow:
+      0 0 0 0 rgba(232, 180, 184, 0.4),
+      0 0 0 0 rgba(201, 169, 110, 0.3);
+  }
+  50% {
+    box-shadow:
+      0 0 0 8px rgba(232, 180, 184, 0),
+      0 0 0 15px rgba(201, 169, 110, 0);
+  }
+}
+
+.luxury-pulse {
+  animation: luxuryPulse 3s ease-in-out infinite;
+}
+
+/* Asymmetric clip path for editorial style */
+.editorial-clip {
+  clip-path: polygon(0 0, 100% 0, 100% 85%, 95% 100%, 0 100%);
+}
+
+/* Pearlescent shine */
+.pearl-shine {
+  background:
+    linear-gradient(135deg,
+      var(--color-porcelain) 0%,
+      rgba(255, 255, 255, 0.9) 20%,
+      var(--color-porcelain) 40%,
+      rgba(232, 180, 184, 0.1) 60%,
+      var(--color-porcelain) 80%,
+      rgba(255, 255, 255, 0.9) 100%
+    );
+  background-size: 400% 400%;
+  animation: pearlShift 10s ease-in-out infinite;
+}
+
+@keyframes pearlShift {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
 }
