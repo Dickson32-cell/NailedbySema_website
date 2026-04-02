@@ -77,26 +77,63 @@ const Hero = () => {
       </div>
 
       {/* Content */}
-      <div className="relative z-10 text-center px-4 max-w-5xl mx-auto">
-        {/* Small editorial badge */}
+      <div className="relative z-10 text-center px-4 max-w-6xl mx-auto">
+        {/* Premium Badge */}
         <motion.div
-          initial={{ opacity: 0, scale: 0.8 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.6, delay: 0.1 }}
-          className="mb-6 inline-flex items-center gap-2 px-4 py-2 rounded-full border border-porcelain/30 backdrop-blur-sm"
+          initial={{ opacity: 0, scale: 0.8, y: -20 }}
+          animate={{ opacity: 1, scale: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.1, type: 'spring' }}
+          className="mb-8 inline-flex items-center gap-3 px-6 py-3 rounded-full glass-card depth-shadow-sm"
         >
-          <div className="w-2 h-2 rounded-full bg-dustyrose animate-pulse" />
-          <span className="text-porcelain/90 text-sm font-body tracking-widest uppercase">Professional Nail Artistry</span>
+          <motion.div
+            animate={{ scale: [1, 1.2, 1], opacity: [1, 0.7, 1] }}
+            transition={{ duration: 2, repeat: Infinity }}
+            className="w-2.5 h-2.5 rounded-full bg-gradient-to-r from-dustyrose to-champagne"
+          />
+          <span className="text-charcoal/80 text-sm md:text-base font-body font-medium tracking-wider uppercase">
+            Award-Winning Nail Artistry
+          </span>
         </motion.div>
 
         <motion.h1
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.2 }}
-          className="font-display text-5xl md:text-7xl lg:text-8xl text-porcelain mb-6 leading-[1.1] tracking-tight"
+          transition={{ duration: 1, delay: 0.3 }}
+          className="font-display text-6xl md:text-8xl lg:text-9xl text-porcelain mb-8 leading-[0.95] tracking-tighter text-depth"
         >
-          Your nails.{' '}
-          <span className="holo-text italic block md:inline">Your story.</span>
+          <motion.span
+            className="inline-block"
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.8, delay: 0.5 }}
+          >
+            Where{' '}
+          </motion.span>
+          <motion.span
+            className="gradient-text italic inline-block"
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.8, delay: 0.7 }}
+          >
+            beauty
+          </motion.span>
+          <br />
+          <motion.span
+            className="inline-block"
+            initial={{ opacity: 0, x: 20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.8, delay: 0.9 }}
+          >
+            meets{' '}
+          </motion.span>
+          <motion.span
+            className="gradient-text italic inline-block"
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.8, delay: 1.1 }}
+          >
+            artistry
+          </motion.span>
         </motion.h1>
 
         <motion.div
@@ -116,56 +153,91 @@ const Hero = () => {
           </p>
         </motion.div>
 
-        {/* Premium CTA Button with Liquid Metal Effect */}
+        {/* Stunning CTA Button */}
         <motion.button
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.6 }}
+          initial={{ opacity: 0, y: 30, scale: 0.9 }}
+          animate={{ opacity: 1, y: 0, scale: 1 }}
+          transition={{ duration: 0.8, delay: 1.3, type: 'spring' }}
           onClick={scrollToBooking}
-          className="btn-premium liquid-metal mirror-reflect relative bg-dustyrose text-charcoal font-body font-semibold px-12 py-5 rounded-full
-                     hover:bg-champagne transition-all duration-500
-                     shadow-lg hover:shadow-2xl hover:shadow-champagne/40
-                     transform hover:scale-105 luxury-pulse"
-          whileHover={{
-            boxShadow: '0 0 30px rgba(201, 169, 110, 0.7), 0 0 60px rgba(201, 169, 110, 0.4), 0 10px 40px rgba(0, 0, 0, 0.3)'
-          }}
-          whileTap={{ scale: 0.98 }}
+          whileHover={{ scale: 1.08, y: -4 }}
+          whileTap={{ scale: 0.95 }}
+          className="btn-luxury glass-card relative px-14 py-6 rounded-full text-charcoal font-body font-semibold text-lg
+                     depth-shadow-lg hover:depth-shadow-xl
+                     transition-all duration-500 cursor-pointer group overflow-hidden"
         >
-          <span className="relative z-10 flex items-center gap-3">
-            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-            </svg>
-            <span className="tracking-wide">Book Your Appointment</span>
+          <span className="relative z-10 flex items-center gap-4">
+            <motion.svg
+              className="w-6 h-6"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              animate={{ rotate: [0, 10, -10, 0] }}
+              transition={{ duration: 3, repeat: Infinity, repeatDelay: 2 }}
+            >
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+            </motion.svg>
+            <span className="tracking-wide">Book Your Experience</span>
+            <motion.svg
+              className="w-5 h-5"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              initial={{ x: 0 }}
+              whileHover={{ x: 5 }}
+            >
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+            </motion.svg>
           </span>
+
+          {/* Animated background gradient */}
+          <motion.div
+            className="absolute inset-0 bg-gradient-to-r from-dustyrose via-champagne to-dustyrose opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+            initial={{ backgroundPosition: '0% 50%' }}
+            whileHover={{ backgroundPosition: '100% 50%' }}
+            style={{ backgroundSize: '200% 200%' }}
+          />
         </motion.button>
 
-        {/* Trust indicators */}
+        {/* Trust indicators - Glass Cards */}
         <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.8, delay: 0.8 }}
-          className="mt-10 flex flex-wrap items-center justify-center gap-6 text-porcelain/70 text-sm"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 1.5 }}
+          className="mt-14 flex flex-wrap items-center justify-center gap-4 md:gap-6"
         >
-          <div className="flex items-center gap-2">
-            <svg className="w-5 h-5 text-champagne" fill="currentColor" viewBox="0 0 20 20">
-              <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-            </svg>
-            <span className="font-body">5-Star Rated</span>
-          </div>
-          <div className="h-4 w-px bg-porcelain/30" />
-          <div className="flex items-center gap-2">
-            <svg className="w-5 h-5 text-champagne" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-            </svg>
-            <span className="font-body">Same Day Available</span>
-          </div>
-          <div className="h-4 w-px bg-porcelain/30" />
-          <div className="flex items-center gap-2">
-            <svg className="w-5 h-5 text-champagne" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
-            </svg>
-            <span className="font-body">Home Service Available</span>
-          </div>
+          {[
+            { icon: (
+              <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
+                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+              </svg>
+            ), text: '5-Star Rated', delay: 0 },
+            { icon: (
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+            ), text: 'Same Day Booking', delay: 0.1 },
+            { icon: (
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+              </svg>
+            ), text: 'Mobile Service', delay: 0.2 },
+          ].map((item, idx) => (
+            <motion.div
+              key={idx}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 1.7 + item.delay, duration: 0.5 }}
+              whileHover={{ y: -4, scale: 1.05 }}
+              className="glass-card px-6 py-4 rounded-2xl flex items-center gap-3 hover:depth-shadow-md transition-all duration-300 cursor-default"
+            >
+              <div className="text-champagne">
+                {item.icon}
+              </div>
+              <span className="font-body font-medium text-charcoal/90 text-sm md:text-base whitespace-nowrap">
+                {item.text}
+              </span>
+            </motion.div>
+          ))}
         </motion.div>
       </div>
 

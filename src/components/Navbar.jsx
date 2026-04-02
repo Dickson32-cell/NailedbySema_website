@@ -34,10 +34,10 @@ const Navbar = () => {
   return (
     <>
       <nav
-        className={`fixed w-full z-50 transition-all duration-500 ${
-          scrolled 
-            ? 'bg-porcelain/90 backdrop-blur-xl shadow-lg py-3 border-b border-dustyrose/20' 
-            : 'bg-transparent py-5'
+        className={`fixed w-full z-50 transition-all duration-700 ${
+          scrolled
+            ? 'nav-glass depth-shadow-md py-3'
+            : 'bg-transparent py-6'
         }`}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

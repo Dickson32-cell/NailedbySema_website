@@ -13,8 +13,8 @@ export default {
         charcoal: '#2C2C2C',
       },
       fontFamily: {
-        display: ['Playfair Display', 'serif'],
-        body: ['DM Sans', 'sans-serif'],
+        display: ['Cormorant Garamond', 'Georgia', 'serif'],
+        body: ['Inter', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
       },
       animation: {
         'fade-up': 'fadeUp 0.8s ease-out forwards',
