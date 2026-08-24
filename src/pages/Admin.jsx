@@ -54,10 +54,11 @@ const Admin = () => {
 
   const fileInputRef = useRef(null)
 
-  // Login handler
+  // Login handler — password from environment variable, not hardcoded
   const handleLogin = (e) => {
     e.preventDefault()
-    if (password === 'sema123') {
+    const adminPassword = import.meta.env.VITE_ADMIN_PASSWORD
+    if (adminPassword && password === adminPassword) {
       setIsAuthenticated(true)
       fetchAllData()
     } else {

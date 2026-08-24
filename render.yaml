@@ -9,6 +9,8 @@ services:
         sync: false
       - key: VITE_SUPABASE_ANON_KEY
         sync: false
+      - key: VITE_ADMIN_PASSWORD
+        sync: false
       - key: VITE_EMAILJS_USER_ID
         sync: false
       - key: VITE_EMAILJS_SERVICE_ID

@@ -1,10 +1,15 @@
 import { createClient } from '@supabase/supabase-js'
 
-// Replace with your actual Supabase credentials
-const supabaseUrl = import.meta.env.VITE_SUPABASE_URL || 'https://csopcqjsaoxvieepuaqk.supabase.co'
-const supabaseKey = import.meta.env.VITE_SUPABASE_ANON_KEY || 'sb_publishable_SJswQdVGyufXNEXrettE8w_iRXUP9oE'
+// Supabase credentials — loaded from environment variables only
+// No hardcoded fallbacks for security
+const supabaseUrl = import.meta.env.VITE_SUPABASE_URL
+const supabaseKey = import.meta.env.VITE_SUPABASE_ANON_KEY
 
-export const supabase = createClient(supabaseUrl, supabaseKey)
+if (!supabaseUrl || !supabaseKey) {
+  console.error('Missing Supabase environment variables. Set VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY in Render.')
+}
+
+export const supabase = createClient(supabaseUrl || '', supabaseKey || '')
 
 // Submit booking to Supabase
 export async function submitBooking(bookingData) {
@@ -78,11 +83,7 @@ export async function sendWhatsAppNotification(bookingData) {
     `${bookingData.clientAddress ? `*Address:* ${bookingData.clientAddress}\n` : ''}` +
     `${bookingData.notes ? `*Notes:* ${bookingData.notes}\n` : ''}`
 
-  console.log('Generating WhatsApp Link...')
-
-  // Format the phone number with Sema's actual number
   const semaPhoneNumber = '233539649949'
-
   const whatsappUrl = `https://wa.me/${semaPhoneNumber}?text=${encodeURIComponent(message)}`
 
   return { success: true, url: whatsappUrl }
@@ -204,23 +205,19 @@ export async function uploadGalleryMedia(file, category = 'All') {
   try {
     const fileExt = file.name.split('.').pop()
     const type = file.type.startsWith('video/') ? 'video' : 'image'
-    // Ensure unique filename
     const fileName = `${Math.random().toString(36).substring(2)}_${Date.now()}.${fileExt}`
     const filePath = `${fileName}`
 
-    // 1. Upload to Storage Bucket
     const { error: uploadError } = await supabase.storage
       .from('gallery_media')
       .upload(filePath, file)
 
     if (uploadError) throw uploadError
 
-    // 2. Get Public URL
     const { data: { publicUrl } } = supabase.storage
       .from('gallery_media')
       .getPublicUrl(filePath)
 
-    // 3. Save reference to DB
     const { data: insertData, error: dbError } = await supabase
       .from('gallery_items')
       .insert([
@@ -243,7 +240,6 @@ export async function uploadGalleryMedia(file, category = 'All') {
 
 export async function deleteGalleryMedia(itemId, url) {
   try {
-    // 1. Delete from DB
     const { error: dbError } = await supabase
       .from('gallery_items')
       .delete()
@@ -251,7 +247,6 @@ export async function deleteGalleryMedia(itemId, url) {
 
     if (dbError) throw dbError
 
-    // 2. Extract relative path and delete from Storage
     const fileName = url.split('/').pop()
     if (fileName) {
       const { error: storageError } = await supabase.storage
@@ -271,7 +266,6 @@ export async function deleteGalleryMedia(itemId, url) {
 // ABOUT SECTION FUNCTIONS
 // ==========================================
 
-// Fetch about section data
 export async function fetchAboutData() {
   const { data, error } = await supabase
     .from('about_section')
@@ -279,7 +273,7 @@ export async function fetchAboutData() {
     .eq('id', 1)
     .single()
 
-  if (error && error.code !== 'PGRST116') { // PGRST116 is "No rows found"
+  if (error && error.code !== 'PGRST116') {
     console.error('Error fetching about data:', error)
     return null
   }
@@ -287,7 +281,6 @@ export async function fetchAboutData() {
   return data
 }
 
-// Update about section data
 export async function updateAboutData(updatePayload) {
   const payloadWithTimestamp = {
     ...updatePayload,
