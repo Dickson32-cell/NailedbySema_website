@@ -1,15 +1,12 @@
 import { createClient } from '@supabase/supabase-js'
 
-// Supabase credentials — loaded from environment variables only
-// No hardcoded fallbacks for security
-const supabaseUrl = import.meta.env.VITE_SUPABASE_URL
-const supabaseKey = import.meta.env.VITE_SUPABASE_ANON_KEY
+// Supabase credentials — env vars with fallback for Render static deployment
+// Note: Supabase anon/publishable key is designed to be safe for client-side use
+// It is restricted by Row Level Security policies in Supabase, not by secrecy
+const supabaseUrl = import.meta.env.VITE_SUPABASE_URL || 'https://csopcqjsaoxvieepuaqk.supabase.co'
+const supabaseKey = import.meta.env.VITE_SUPABASE_ANON_KEY || 'sb_publishable_SJswQdVGyufXNEXrettE8w_iRXUP9oE'
 
-if (!supabaseUrl || !supabaseKey) {
-  console.error('Missing Supabase environment variables. Set VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY in Render.')
-}
-
-export const supabase = createClient(supabaseUrl || '', supabaseKey || '')
+export const supabase = createClient(supabaseUrl, supabaseKey)
 
 // Submit booking to Supabase
 export async function submitBooking(bookingData) {
@@ -174,7 +171,6 @@ export async function validateHandoutCode(code) {
     return { valid: false, message: 'This code has already been used.' }
   }
 
-  // Mark as used
   await supabase
     .from('handout_codes')
     .update({ is_used: true })
@@ -220,13 +216,7 @@ export async function uploadGalleryMedia(file, category = 'All') {
 
     const { data: insertData, error: dbError } = await supabase
       .from('gallery_items')
-      .insert([
-        {
-          url: publicUrl,
-          type: type,
-          category: category
-        }
-      ])
+      .insert([{ url: publicUrl, type: type, category: category }])
       .select()
 
     if (dbError) throw dbError
@@ -253,7 +243,7 @@ export async function deleteGalleryMedia(itemId, url) {
         .from('gallery_media')
         .remove([fileName])
 
-      if (storageError) console.error('Failed to remove from storage, but DB entry removed', storageError)
+      if (storageError) console.error('Failed to remove from storage', storageError)
     }
     return { success: true }
   } catch (error) {
