@@ -63,165 +63,112 @@ const Testimonials = () => {
     setTimeout(() => { setShowForm(false); setSubmitted(false) }, 3000)
   }
 
-  const nextReview = () => {
-    setCurrentIndex((prev) => (prev + 1) % reviews.length)
-  }
-
-  const prevReview = () => {
-    setCurrentIndex((prev) => (prev - 1 + reviews.length) % reviews.length)
-  }
+  const nextReview = () => setCurrentIndex((prev) => (prev + 1) % reviews.length)
+  const prevReview = () => setCurrentIndex((prev) => (prev - 1 + reviews.length) % reviews.length)
 
   return (
-    <section className="py-20 bg-dustyrose/10 section-pattern">
+    <section id="reviews" className="py-20 bg-white">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="text-center mb-16"
+          className="text-center mb-12"
         >
+          <p className="text-dustyrose text-xs font-body tracking-[0.2em] uppercase mb-4">Testimonials</p>
           <h2 className="font-display text-4xl md:text-5xl text-charcoal mb-4">
-            Client <span className="text-dustyrose italic">Reviews</span>
+            Client <span className="italic text-dustyrose">Reviews</span>
           </h2>
-          <div className="flex justify-center mb-4">
-            <div className="w-16 h-0.5 bg-gradient-to-r from-dustyrose to-champagne rounded" />
-          </div>
-          <p className="font-body text-charcoal/70">What our clients say about us</p>
+          <div className="section-divider mb-6" />
+          <p className="font-body text-base text-charcoal/70">What our clients say about us</p>
         </motion.div>
 
         {/* Carousel */}
-        <div 
+        <div
           className="relative"
           onMouseEnter={() => setIsPaused(true)}
           onMouseLeave={() => setIsPaused(false)}
         >
-          {/* Navigation Arrows */}
           <button
             onClick={prevReview}
-            className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 md:-translate-x-12 z-10
-                       w-10 h-10 bg-white shadow-lg rounded-full flex items-center justify-center
-                       hover:bg-dustyrose hover:text-white transition-all duration-300 cursor-pointer"
+            className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-2 md:-translate-x-8 z-10 w-10 h-10 bg-white shadow rounded-full flex items-center justify-center hover:bg-dustyrose hover:text-porcelain transition-colors"
           >
             <FaChevronLeft />
           </button>
           <button
             onClick={nextReview}
-            className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 md:translate-x-12 z-10
-                       w-10 h-10 bg-white shadow-lg rounded-full flex items-center justify-center
-                       hover:bg-dustyrose hover:text-white transition-all duration-300 cursor-pointer"
+            className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-2 md:translate-x-8 z-10 w-10 h-10 bg-white shadow rounded-full flex items-center justify-center hover:bg-dustyrose hover:text-porcelain transition-colors"
           >
             <FaChevronRight />
           </button>
 
-          {/* Review Cards */}
           <AnimatePresence mode="wait">
             <motion.div
               key={currentIndex}
-              initial={{ opacity: 0, x: 50 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: -50 }}
-              transition={{ duration: 0.5 }}
-              className="bg-white rounded-2xl p-8 md:p-12 shadow-xl"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.3 }}
+              className="bg-porcelain rounded-2xl p-8 md:p-12 shadow-sm border border-charcoal/5"
             >
-              {/* Stars */}
-              <div className="flex justify-center gap-2 mb-8">
+              <div className="flex justify-center gap-1 mb-6">
                 {[...Array(reviews[currentIndex]?.rating || 5)].map((_, i) => (
-                  <motion.div
-                    key={i}
-                    initial={{ opacity: 0, scale: 0 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{ delay: i * 0.1 }}
-                  >
-                    <FaStar className="text-champagne" size={24} />
-                  </motion.div>
+                  <FaStar key={i} className="text-champagne" size={20} />
                 ))}
               </div>
-
-              {/* Quote */}
-              <motion.p 
-                className="font-body text-xl md:text-2xl text-charcoal/80 italic text-center mb-10 leading-relaxed"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 0.2 }}
-              >
+              <p className="font-body text-lg md:text-xl text-charcoal/80 italic text-center mb-8 leading-relaxed">
                 "{reviews[currentIndex]?.text}"
-              </motion.p>
-
-              {/* Author */}
-              <motion.div
-                className="text-center"
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.3 }}
-              >
-                <p className="font-display text-2xl text-charcoal mb-1">{reviews[currentIndex]?.name}</p>
-                <p className="font-body text-dustyrose font-medium">{reviews[currentIndex]?.service}</p>
-              </motion.div>
+              </p>
+              <div className="text-center">
+                <p className="font-display text-xl text-charcoal mb-1">{reviews[currentIndex]?.name}</p>
+                <p className="font-body text-dustyrose text-sm font-medium">{reviews[currentIndex]?.service}</p>
+              </div>
             </motion.div>
           </AnimatePresence>
 
-          {/* Auto-play Indicators */}
-          <div className="flex justify-center gap-2 mt-8">
+          {/* Dots */}
+          <div className="flex justify-center gap-2 mt-6">
             {reviews.map((_, index) => (
               <button
                 key={index}
                 onClick={() => setCurrentIndex(index)}
-                className={`h-3 rounded-full transition-all duration-300 ${
-                  index === currentIndex 
-                    ? 'bg-dustyrose w-10 shadow-lg shadow-dustyrose/30' 
-                    : 'bg-charcoal/20 w-3 hover:bg-charcoal/40'
+                className={`h-2 rounded-full transition-all ${
+                  index === currentIndex ? 'bg-dustyrose w-8' : 'bg-charcoal/20 w-2'
                 }`}
               />
             ))}
           </div>
-
-          {/* Auto-play indicator */}
-          <div className="flex justify-center mt-4">
-            <span className={`text-xs font-body ${isPaused ? 'text-charcoal/50' : 'text-dustyrose'}`}>
-              {isPaused ? 'Paused' : 'Auto-playing'}
-            </span>
-          </div>
         </div>
 
-        {/* Leave a Review */}
-        <div className="mt-16 text-center">
+        {/* Leave a review */}
+        <div className="mt-12 text-center">
           {!showForm ? (
-            <motion.button
+            <button
               onClick={() => setShowForm(true)}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className="bg-dustyrose text-white font-body px-10 py-4 rounded-full 
-                         hover:bg-dustyrose/80 transition-colors duration-300 shadow-lg hover:shadow-xl"
+              className="bg-dustyrose text-charcoal font-body font-medium px-8 py-3 rounded-full hover:bg-champagne transition-colors duration-300"
             >
               Leave a Review
-            </motion.button>
+            </button>
           ) : (
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -20 }}
-              className="bg-white rounded-2xl p-8 shadow-xl text-left mt-6"
+              className="bg-porcelain rounded-2xl p-8 shadow-sm border border-charcoal/5 text-left mt-6 max-w-2xl mx-auto"
             >
               {submitted ? (
-                <div className="text-center py-10">
-                  <motion.div 
-                    className="flex items-center justify-center gap-2 font-display text-3xl text-dustyrose mb-4"
-                    initial={{ scale: 0 }}
-                    animate={{ scale: 1 }}
-                    transition={{ type: 'spring' }}
-                  >
-                    <Check size={32} />
+                <div className="text-center py-8">
+                  <div className="flex items-center justify-center gap-2 font-display text-2xl text-dustyrose mb-4">
+                    <Check size={28} />
                     <span>Thank you!</span>
-                    <Heart size={28} className="text-champagne" />
-                  </motion.div>
+                    <Heart size={24} className="text-champagne" />
+                  </div>
                   <p className="font-body text-charcoal/70">Your review has been posted.</p>
                 </div>
               ) : (
-                <form onSubmit={handleSubmit} className="space-y-6">
-                  <h3 className="font-display text-2xl text-charcoal mb-6 text-center">Share Your Experience</h3>
-
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <form onSubmit={handleSubmit} className="space-y-5">
+                  <h3 className="font-display text-2xl text-charcoal mb-4 text-center">Share Your Experience</h3>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
                       <label className="font-body text-sm text-charcoal/70 mb-2 block">Your Name *</label>
                       <input
@@ -231,11 +178,9 @@ const Testimonials = () => {
                         onChange={handleChange}
                         required
                         placeholder="e.g. Akosua"
-                        className="w-full border-2 border-charcoal/10 rounded-xl px-4 py-3 font-body text-charcoal 
-                                   focus:outline-none focus:border-dustyrose transition-colors bg-porcelain/50"
+                        className="w-full border border-charcoal/10 rounded-lg px-4 py-3 font-body text-charcoal focus:outline-none focus:border-dustyrose transition-colors bg-white"
                       />
                     </div>
-
                     <div>
                       <label className="font-body text-sm text-charcoal/70 mb-2 block">Service Received *</label>
                       <select
@@ -243,8 +188,7 @@ const Testimonials = () => {
                         value={form.service}
                         onChange={handleChange}
                         required
-                        className="w-full border-2 border-charcoal/10 rounded-xl px-4 py-3 font-body text-charcoal 
-                                   focus:outline-none focus:border-dustyrose transition-colors bg-porcelain/50"
+                        className="w-full border border-charcoal/10 rounded-lg px-4 py-3 font-body text-charcoal focus:outline-none focus:border-dustyrose transition-colors bg-white"
                       >
                         <option value="">Select a service</option>
                         {serviceOptions.map((s) => (
@@ -253,30 +197,23 @@ const Testimonials = () => {
                       </select>
                     </div>
                   </div>
-
                   <div>
                     <label className="font-body text-sm text-charcoal/70 mb-2 block">Rating *</label>
-                    <div className="flex gap-3">
+                    <div className="flex gap-2">
                       {[1, 2, 3, 4, 5].map((star) => (
-                        <motion.div
+                        <FaStar
                           key={star}
-                          whileHover={{ scale: 1.2 }}
-                          whileTap={{ scale: 0.9 }}
-                        >
-                          <FaStar
-                            size={32}
-                            className={`cursor-pointer transition-colors duration-200 ${
-                              star <= (hoverRating || form.rating) ? 'text-champagne' : 'text-charcoal/20'
-                            }`}
-                            onMouseEnter={() => setHoverRating(star)}
-                            onMouseLeave={() => setHoverRating(0)}
-                            onClick={() => setForm({ ...form, rating: star })}
-                          />
-                        </motion.div>
+                          size={28}
+                          className={`cursor-pointer transition-colors ${
+                            star <= (hoverRating || form.rating) ? 'text-champagne' : 'text-charcoal/15'
+                          }`}
+                          onMouseEnter={() => setHoverRating(star)}
+                          onMouseLeave={() => setHoverRating(0)}
+                          onClick={() => setForm({ ...form, rating: star })}
+                        />
                       ))}
                     </div>
                   </div>
-
                   <div>
                     <label className="font-body text-sm text-charcoal/70 mb-2 block">Your Review *</label>
                     <textarea
@@ -286,32 +223,24 @@ const Testimonials = () => {
                       required
                       rows={4}
                       placeholder="Tell others about your experience..."
-                      className="w-full border-2 border-charcoal/10 rounded-xl px-4 py-3 font-body text-charcoal 
-                                 focus:outline-none focus:border-dustyrose transition-colors resize-none bg-porcelain/50"
+                      className="w-full border border-charcoal/10 rounded-lg px-4 py-3 font-body text-charcoal focus:outline-none focus:border-dustyrose transition-colors resize-none bg-white"
                     />
                   </div>
-
-                  <div className="flex gap-4 justify-center pt-4">
-                    <motion.button
+                  <div className="flex gap-3 justify-center">
+                    <button
                       type="submit"
                       disabled={submitting}
-                      whileHover={{ scale: 1.05 }}
-                      whileTap={{ scale: 0.95 }}
-                      className="bg-dustyrose text-white font-body px-10 py-3 rounded-full 
-                                 hover:bg-dustyrose/80 transition-colors duration-300 disabled:opacity-60"
+                      className="bg-dustyrose text-charcoal font-body font-medium px-8 py-3 rounded-full hover:bg-champagne transition-colors disabled:opacity-60"
                     >
                       {submitting ? 'Submitting...' : 'Submit Review'}
-                    </motion.button>
-                    <motion.button
+                    </button>
+                    <button
                       type="button"
                       onClick={() => setShowForm(false)}
-                      whileHover={{ scale: 1.05 }}
-                      whileTap={{ scale: 0.95 }}
-                      className="border-2 border-charcoal/20 text-charcoal font-body px-10 py-3 rounded-full 
-                                 hover:bg-charcoal/5 transition-colors duration-300"
+                      className="border border-charcoal/20 text-charcoal font-body px-8 py-3 rounded-full hover:bg-charcoal/5 transition-colors"
                     >
                       Cancel
-                    </motion.button>
+                    </button>
                   </div>
                 </form>
               )}

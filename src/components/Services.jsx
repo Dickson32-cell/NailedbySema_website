@@ -107,7 +107,7 @@ const serviceCategories = [
 
 const Services = ({ onBook, onDownloadHandout }) => {
   return (
-    <section id="services" className="py-20 bg-porcelain section-pattern">
+    <section id="services" className="py-20 bg-porcelain">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -116,124 +116,67 @@ const Services = ({ onBook, onDownloadHandout }) => {
           transition={{ duration: 0.6 }}
           className="text-center mb-16"
         >
-          <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-            className="inline-block mb-6 px-4 py-1.5 rounded-full border border-dustyrose/30 bg-white/50 backdrop-blur-sm"
-          >
-            <span className="text-dustyrose text-xs font-body tracking-[0.2em] uppercase">Our Services</span>
-          </motion.div>
-
-          <h2 className="font-display text-4xl md:text-5xl lg:text-6xl text-charcoal mb-4 leading-tight">
-            Elevate Your <span className="holo-text italic">Beauty</span>
+          <p className="text-dustyrose text-xs font-body tracking-[0.2em] uppercase mb-4">
+            Our Services
+          </p>
+          <h2 className="font-display text-4xl md:text-5xl text-charcoal mb-4">
+            Elevate Your <span className="italic text-dustyrose">Beauty</span>
           </h2>
-          <div className="flex justify-center mb-6">
-            <div className="nail-drip w-20 h-1 bg-gradient-to-r from-transparent via-dustyrose to-transparent rounded-full" />
-          </div>
-          <p className="font-body text-base md:text-lg text-charcoal/70 max-w-2xl mx-auto leading-relaxed">
-            Professional nail artistry tailored to your unique style.<br className="hidden md:block" />
-            <span className="text-champagne/80 text-sm">All services include complimentary consultation</span>
+          <div className="section-divider mb-6" />
+          <p className="font-body text-base text-charcoal/70 max-w-2xl mx-auto">
+            Professional nail artistry tailored to your unique style.
+            <span className="block text-sm text-champagne mt-1">All services include complimentary consultation</span>
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {serviceCategories.map((group, groupIndex) => (
             <motion.div
               key={group.category}
-              initial={{ opacity: 0, y: 30 }}
+              initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: groupIndex * 0.1 }}
-              whileHover={{ y: -12 }}
-              className="relative card-lift liquid-metal mirror-reflect bg-white rounded-3xl p-8 shadow-md hover:shadow-2xl overflow-hidden cursor-pointer border border-white/50"
+              transition={{ duration: 0.4, delay: groupIndex * 0.05 }}
+              className="card-hover relative bg-white rounded-2xl p-6 shadow-sm border border-charcoal/5"
             >
-              {/* Popular Badge with Glow */}
               {group.popular && (
-                <motion.div
-                  initial={{ scale: 0.9, opacity: 0 }}
-                  animate={{ scale: 1, opacity: 1 }}
-                  transition={{ delay: groupIndex * 0.1 + 0.3 }}
-                  className="absolute -top-2 -right-2 z-10"
-                >
-                  <span className="bg-gradient-to-br from-champagne to-dustyrose text-charcoal text-xs font-bold px-4 py-2 rounded-full shadow-lg flex items-center gap-1.5 border border-white/30">
-                    <Sparkles size={14} className="animate-pulse" />
-                    Most Popular
-                  </span>
-                </motion.div>
+                <span className="absolute top-4 right-4 bg-champagne/20 text-champagne text-xs font-medium px-3 py-1 rounded-full">
+                  Popular
+                </span>
               )}
 
-              {/* Decorative Corner Accent */}
-              <div className="absolute top-0 left-0 w-20 h-20 bg-gradient-to-br from-dustyrose/10 to-transparent rounded-br-full" />
-
-              {/* Header with Icon */}
-              <div className="flex items-start gap-4 mb-6 pb-5 border-b border-dustyrose/20">
-                <motion.div
-                  className="w-12 h-12 flex-shrink-0 flex items-center justify-center text-dustyrose bg-dustyrose/10 rounded-2xl"
-                  whileHover={{ scale: 1.15, rotate: [0, -12, 12, -8, 8, 0] }}
-                  transition={{ duration: 0.6 }}
-                >
-                  <group.icon size={24} />
-                </motion.div>
-                <div className="flex-1">
-                  <h3 className="font-display text-xl md:text-2xl text-charcoal leading-tight mb-1">{group.category}</h3>
-                  <p className="text-xs text-charcoal/50 font-body">Premium quality · Professional service</p>
+              <div className="flex items-center gap-3 mb-5 pb-4 border-b border-charcoal/10">
+                <div className="w-10 h-10 flex items-center justify-center text-dustyrose bg-dustyrose/10 rounded-xl">
+                  <group.icon size={20} />
                 </div>
+                <h3 className="font-display text-xl text-charcoal">{group.category}</h3>
               </div>
 
-              {/* Service Items with Enhanced Styling */}
-              <ul className="space-y-4 mb-8">
-                {group.items.map((item, idx) => (
-                  <motion.li
-                    key={item.name}
-                    initial={{ opacity: 0, x: -10 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: groupIndex * 0.1 + idx * 0.05 }}
-                    className="flex justify-between items-center group"
-                  >
-                    <span className="font-body text-charcoal/80 group-hover:text-charcoal transition-colors text-sm md:text-base">
-                      {item.name}
-                    </span>
-                    <span className="font-display text-base md:text-lg text-champagne font-semibold whitespace-nowrap ml-4 group-hover:scale-105 transition-transform inline-block">
-                      {item.price}
-                    </span>
-                  </motion.li>
+              <ul className="space-y-3 mb-6">
+                {group.items.map((item) => (
+                  <li key={item.name} className="flex justify-between items-center">
+                    <span className="font-body text-sm text-charcoal/80">{item.name}</span>
+                    <span className="font-display text-base text-champagne font-semibold">{item.price}</span>
+                  </li>
                 ))}
               </ul>
 
-              {/* Book Button with Luxury Style */}
-              <motion.button
+              <button
                 onClick={onBook}
-                whileHover={{ scale: 1.03 }}
-                whileTap={{ scale: 0.97 }}
-                className="w-full bg-gradient-to-r from-charcoal to-charcoal/90 text-porcelain font-body font-semibold py-4 rounded-full
-                           hover:from-dustyrose hover:to-champagne hover:text-charcoal
-                           transition-all duration-500 cursor-pointer shadow-md hover:shadow-lg
-                           border border-charcoal/10 hover:border-champagne/30"
+                className="w-full bg-charcoal text-porcelain font-body font-medium py-3 rounded-full hover:bg-dustyrose hover:text-charcoal transition-colors duration-300"
               >
                 Book Now
-              </motion.button>
+              </button>
 
-              {/* Download Training Handout Button */}
               {group.category === 'Nails Training' && (
-                <motion.button
+                <button
                   onClick={onDownloadHandout}
-                  whileHover={{ scale: 1.03 }}
-                  whileTap={{ scale: 0.97 }}
-                  className="w-full mt-3 bg-white border-2 border-dustyrose text-dustyrose font-body font-semibold py-4 rounded-full
-                             hover:bg-gradient-to-r hover:from-dustyrose hover:to-champagne hover:text-white hover:border-transparent
-                             transition-all duration-500
-                             flex items-center justify-center gap-2 cursor-pointer shadow-sm hover:shadow-md"
+                  className="w-full mt-3 bg-white border border-dustyrose text-dustyrose font-body font-medium py-3 rounded-full hover:bg-dustyrose hover:text-charcoal transition-colors duration-300 flex items-center justify-center gap-2"
                 >
-                  <Download size={18} />
-                  <span>Training Handout · 200 GHS</span>
-                </motion.button>
+                  <Download size={16} />
+                  Training Handout · 200 GHS
+                </button>
               )}
-
-              {/* Subtle Corner Decoration */}
-              <div className="absolute bottom-0 right-0 w-16 h-16 bg-gradient-to-tl from-champagne/5 to-transparent rounded-tl-full" />
             </motion.div>
           ))}
         </div>
